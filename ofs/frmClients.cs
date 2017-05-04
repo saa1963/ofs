@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ofs.Properties;
 
 namespace ofs
 {
@@ -19,17 +20,21 @@ namespace ofs
         {
             InitializeComponent();
             g.AutoGenerateColumns = false;
-            //foreach(var o in ctx.Clients)
-            //{
-            //    lst.Add(o);
-            //}
             RefreshData();
+            DialogResult = DialogResult.None;
         }
 
         private void RefreshData(Client o = null)
         {
             bs.DataSource = null;
-            bs.DataSource = ctx.Clients.OrderBy(s => s.Inn).ToList();
+            if (!String.IsNullOrWhiteSpace(tbFind.Text))
+            {
+                bs.DataSource = ctx.Clients.Where(s => s.Name.Contains(tbFind.Text)).OrderBy(s => s.Inn).ToList();
+            }
+            else
+            {
+                bs.DataSource = ctx.Clients.OrderBy(s => s.Inn).ToList();
+            }
             g.DataSource = bs;
             if (o != null)
             {
@@ -85,6 +90,49 @@ namespace ofs
             ctx.Clients.Remove(o);
             ctx.SaveChanges();
             RefreshData();
+        }
+
+        private void frmClients_Load(object sender, EventArgs e)
+        {
+            Location = Settings.Default.frmClients_Location;
+            Size = Settings.Default.frmClients_Size;
+            g.Columns[0].Width = Settings.Default.frmClients_Col0;
+            g.Columns[1].Width = Settings.Default.frmClients_Col1;
+        }
+
+        private void frmClients_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Settings.Default.frmClients_Location = Location;
+            Settings.Default.frmClients_Size = Size;
+            Settings.Default.frmClients_Col0 = g.Columns[0].Width;
+            Settings.Default.frmClients_Col1 = g.Columns[1].Width;
+            Settings.Default.Save();
+        }
+
+        private void btnFind_Click(object sender, EventArgs e)
+        {
+            RefreshData();
+        }
+
+        private void g_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DialogResult = DialogResult.OK;
+            Close();
+        }
+
+        public Client SelectedClient
+        {
+            get
+            {
+                if (bs.Current == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return bs.Current as Client;
+                }
+            }
         }
     }
 }

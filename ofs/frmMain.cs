@@ -12,9 +12,11 @@ using System.Windows.Forms;
 
 namespace ofs
 {
-    public partial class Form1 : Form
+    public partial class frmMain : Form
     {
-        public Form1()
+        BindingSource bs = new BindingSource();
+        OfsContext ctx = new OfsContext();
+        public frmMain()
         {
             InitializeComponent();
             Text = Application.ProductName;
@@ -33,6 +35,18 @@ namespace ofs
         private void mnuBlines_Click(object sender, EventArgs e)
         {
             new frmBlines().ShowDialog();
+        }
+
+        private void mnuBalanceEditor_Click(object sender, EventArgs e)
+        {
+            var lst = new List<Balance>();
+            var f = new frmBalanceParameters();
+            if (f.ShowDialog() != DialogResult.OK) return;
+            var bExistBalance = ctx.Balances.Any(s => s.Inn == f.Inn && s.Year == f.Year && s.Quater == f.Quater);
+            if (!bExistBalance)
+            {
+                MessageBox.Show($"Баланс", "", MessageBoxButtons.YesNo)
+            }
         }
     }
 }

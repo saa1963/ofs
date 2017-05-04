@@ -1,6 +1,6 @@
 ﻿namespace ofs
 {
-    partial class Form1
+    partial class frmMain
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -29,11 +29,12 @@
         private void InitializeComponent()
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.mnuAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuSprav = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuClients = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuBlines = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuBalanceEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,18 +50,13 @@
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // mnuAbout
-            // 
-            this.mnuAbout.Name = "mnuAbout";
-            this.mnuAbout.Size = new System.Drawing.Size(94, 20);
-            this.mnuAbout.Text = "О программе";
-            this.mnuAbout.Click += new System.EventHandler(this.mnuAbout_Click);
-            // 
             // toolStripMenuItem1
             // 
+            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuBalanceEditor});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(31, 20);
-            this.toolStripMenuItem1.Text = "11";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(67, 20);
+            this.toolStripMenuItem1.Text = "Балансы";
             // 
             // mnuSprav
             // 
@@ -85,14 +81,28 @@
             this.mnuBlines.Text = "Статьи баланса";
             this.mnuBlines.Click += new System.EventHandler(this.mnuBlines_Click);
             // 
-            // Form1
+            // mnuAbout
+            // 
+            this.mnuAbout.Name = "mnuAbout";
+            this.mnuAbout.Size = new System.Drawing.Size(94, 20);
+            this.mnuAbout.Text = "О программе";
+            this.mnuAbout.Click += new System.EventHandler(this.mnuAbout_Click);
+            // 
+            // mnuBalanceEditor
+            // 
+            this.mnuBalanceEditor.Name = "mnuBalanceEditor";
+            this.mnuBalanceEditor.Size = new System.Drawing.Size(152, 22);
+            this.mnuBalanceEditor.Text = "Редактор";
+            this.mnuBalanceEditor.Click += new System.EventHandler(this.mnuBalanceEditor_Click);
+            // 
+            // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(799, 470);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
+            this.Name = "frmMain";
             this.Text = "Form1";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -109,6 +119,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuSprav;
         private System.Windows.Forms.ToolStripMenuItem mnuClients;
         private System.Windows.Forms.ToolStripMenuItem mnuBlines;
+        private System.Windows.Forms.ToolStripMenuItem mnuBalanceEditor;
     }
 }
 
