@@ -74,7 +74,7 @@ namespace ofs
                 Cols = new Dictionary<int, QYear>();
                 while (true)
                 {
-                    dt = ToDate(wsh.Cells[row, col].Value);
+                    dt = ToDate(wshF2.Cells[row, col].Value);
                     if (dt.HasValue)
                     {
                         Cols.Add(col, QYear.FromDate(dt.Value));
@@ -85,12 +85,95 @@ namespace ofs
                     }
                     col++;
                 }
+
+                foreach (var cl in Cols)
+                {
+                    row = 10;
+                    while (row < 35)
+                    {
+                        var ocode = wshF2.Cells[row, 2].Value;
+                        if (ocode is string)
+                        {
+                            code = ocode.ToString();
+                            if (!String.IsNullOrWhiteSpace(code))
+                            {
+                                bal = new Balance();
+                                bal.Code = code;
+                                bal.Inn = wshNastr.Cells[2, 2].Value.ToString();
+                                bal.Quater = cl.Value.Quater;
+                                bal.Year = cl.Value.Year;
+                                ocode = wshF2.Cells[row, cl.Key].Value;
+                                if (ocode != null)
+                                {
+                                    bal.Sm = Convert.ToInt32(ocode);
+                                }
+                                else
+                                {
+                                    bal.Sm = 0;
+                                }
+                                try
+                                {
+                                    ctx.Balances.Add(bal);
+                                }
+                                catch { }
+                            }
+                        }
+                        row++;
+                    }
+                }
+                ctx.SaveChanges();
             }
         }
 
         private DateTime? ToDate(object value)
         {
-            
+            if (value != null)
+            {
+                int year, month;
+                var s = value.ToString();
+                if (s.Contains("2013"))
+                {
+                    year = 2013;
+                }
+                else if (s.Contains("2014"))
+                {
+                    year = 2014;
+                }
+                else if (s.Contains("2015"))
+                {
+                    year = 2015;
+                }
+                else if (s.Contains("2016"))
+                {
+                    year = 2016;
+                }
+                else if (s.Contains("2017"))
+                {
+                    year = 2017;
+                }
+                else
+                    return null;
+                if (s.Contains("1 кв"))
+                {
+                    month = 4;
+                }
+                else if (s.Contains("1 полу"))
+                {
+                    month = 7;
+                }
+                else if (s.Contains("9 мес"))
+                {
+                    month = 10;
+                }
+                else
+                {
+                    month = 1;
+                    year++;
+                }
+                return new DateTime(year, month, 1);
+            }
+            else
+                return null;
         }
     }
 
