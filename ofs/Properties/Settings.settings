@@ -14,5 +14,8 @@
     <Setting Name="frmClients_Col1" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">377</Value>
     </Setting>
+    <Setting Name="ExcelPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -25,7 +25,7 @@ namespace ofs
         private void RefreshData(Bline o = null)
         {
             bs.DataSource = null;
-            bs.DataSource = ctx.Blines.OrderBy(s => s.Part).ThenBy(s => s.Line).ToList();
+            bs.DataSource = ctx.Blines.OrderBy(s => s.CodeSort).ToList();
             g.DataSource = bs;
             if (o != null)
             {
@@ -39,13 +39,14 @@ namespace ofs
             var f = new frmBlinesEdit();
             if (f.ShowDialog() == DialogResult.OK)
             {
-                if (ctx.Blines.Find(f.Part, f.Line) != null)
+                if (ctx.Blines.Find(f.Code) != null)
                 {
-                    MessageBox.Show($"Строка с кодом 1{f.Part}{f.Line} уже существует");
+                    MessageBox.Show($"Строка с кодом {f.Code} уже существует");
                 }
                 else
                 {
-                    o = new Bline() { Part = f.Part, Line = f.Line, Name = f.NameLine };
+                    o = new Bline() { Code = f.Code, Name = f.NameLine, IsNegative = f.IsNegative,
+                                            Calculated = f.Calculated, CodeSort = f.CodeSort };
                     ctx.Blines.Add(o);
                     ctx.SaveChanges();
                     RefreshData(o);
@@ -57,7 +58,7 @@ namespace ofs
         {
             if (bs.Current == null) return;
             var o = bs.Current as Bline;
-            if (ctx.Balances.Any(s => s.Part == o.Part && s.Line == o.Line))
+            if (ctx.Balances.Any(s => s.Code == o.Code))
             {
                 MessageBox.Show($"Данная строка присутствует в балансах. Удалить нельзя.");
                 return;
@@ -72,14 +73,18 @@ namespace ofs
             if (bs.Current == null) return;
             var o = bs.Current as Bline;
             var f = new frmBlinesEdit();
-            f.Part = o.Part;
-            f.Line = o.Line;
+            f.Code = o.Code;
             f.NameLine = o.Name;
-            f.tbPart.Enabled = false;
-            f.tbLine.Enabled = false;
+            f.IsNegative = o.IsNegative;
+            f.Calculated = o.Calculated;
+            f.CodeSort = o.CodeSort;
+            f.tbCode.Enabled = false;
             if (f.ShowDialog() == DialogResult.OK)
             {
                 o.Name = f.NameLine;
+                o.Calculated = f.Calculated;
+                o.CodeSort = f.CodeSort;
+                o.IsNegative = f.IsNegative;
                 ctx.SaveChanges();
                 RefreshData(o);
             }

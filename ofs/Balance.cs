@@ -21,10 +21,12 @@ namespace ofs
         public string Inn { get; set; }
         [Key]
         [Column(Order = 4)]
-        public string Part { get; set; }
-        [Key]
-        [Column(Order = 5)]
-        public string Line { get; set; }
+        public string Code { get; set; }
         public int Sm { get; set; }
+        [ForeignKey("Code")]
+        public Bline Bline { get; set; }
+        [ForeignKey("Inn")]
+        public Client Client { get; set; }
+
     }
 }

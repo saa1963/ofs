@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ofs.Properties;
 
 namespace ofs
 {
@@ -45,7 +46,46 @@ namespace ofs
             var bExistBalance = ctx.Balances.Any(s => s.Inn == f.Inn && s.Year == f.Year && s.Quater == f.Quater);
             if (!bExistBalance)
             {
-                MessageBox.Show($"Баланс", "", MessageBoxButtons.YesNo)
+                if (MessageBox.Show($"Баланс не существует. Добавить?", "", MessageBoxButtons.YesNo) == DialogResult.No)
+                {
+                    return;
+                }
+                else
+                {
+                    var bl = ctx.Blines.OrderBy(s => s.Code);
+                    foreach (var o in bl)
+                    {
+                        var bal = new Balance()
+                            { Inn = f.Inn, Year = f.Year, Quater = f.Quater, Code = o.Code, Sm = 0 };
+                        ctx.Balances.Add(bal);
+                    }
+                    ctx.SaveChanges();
+                }
+            }
+            lst = ctx.Balances.Where
+                (s => s.Inn == f.Inn && s.Year == f.Year && s.Quater == f.Quater)
+                .OrderBy(s => s.Code).ToList();
+
+            if (Controls.ContainsKey("g"))
+            {
+                Controls.RemoveByKey("g");
+            }
+        }
+
+        private void mnuLoadFromExcel_Click(object sender, EventArgs e)
+        {
+            var ofd = new OpenFileDialog();
+            ofd.InitialDirectory = Settings.Default.ExcelPath;
+            ofd.Filter = "Файлы Excel (*.xlsx)|*.xlsx";
+            if (ofd.ShowDialog() != DialogResult.OK) return;
+            try
+            {
+                new Utils().LoadBalance(ofd.FileName);
+            }
+            catch (LoadExcelException e1)
+            {
+                MessageBox.Show(e1.Message);
+                return;
             }
         }
     }

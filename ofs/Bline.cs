@@ -11,15 +11,15 @@ namespace ofs
     public class Bline
     {
         [Key]
-        [Column(Order=1)]
-        [MaxLength(1)]
-        public string Part { get; set; }
-        [Key]
-        [Column(Order = 2)]
-        [MaxLength(2)]
-        public string Line { get; set; }
+        [MaxLength(4), MinLength(4)]
+        public string Code { get; set; }
         [Required]
         [MaxLength(200)]
         public string Name { get; set; }
+        [Required]
+        public bool IsNegative { get; set; }
+        [MaxLength(200)]
+        public string Calculated { get; set; }
+        public int CodeSort { get; set; }
     }
 }

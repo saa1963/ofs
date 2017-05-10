@@ -35,8 +35,10 @@
             this.btnDel = new System.Windows.Forms.ToolStripButton();
             this.g = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.g)).BeginInit();
             this.SuspendLayout();
@@ -49,7 +51,7 @@
             this.btnDel});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(554, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(778, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -90,28 +92,23 @@
             this.g.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.g.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
+            this.Column3,
             this.Column2,
-            this.Column3});
+            this.Column4,
+            this.Column5});
             this.g.Dock = System.Windows.Forms.DockStyle.Fill;
             this.g.Location = new System.Drawing.Point(0, 25);
             this.g.Name = "g";
             this.g.ReadOnly = true;
-            this.g.Size = new System.Drawing.Size(554, 418);
+            this.g.Size = new System.Drawing.Size(778, 418);
             this.g.TabIndex = 1;
             // 
             // Column1
             // 
-            this.Column1.DataPropertyName = "Part";
-            this.Column1.HeaderText = "Раздел";
+            this.Column1.DataPropertyName = "Code";
+            this.Column1.HeaderText = "Код";
             this.Column1.Name = "Column1";
             this.Column1.ReadOnly = true;
-            // 
-            // Column2
-            // 
-            this.Column2.DataPropertyName = "Line";
-            this.Column2.HeaderText = "Строка";
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
             // 
             // Column3
             // 
@@ -121,11 +118,32 @@
             this.Column3.ReadOnly = true;
             this.Column3.Width = 300;
             // 
+            // Column2
+            // 
+            this.Column2.DataPropertyName = "IsNegative";
+            this.Column2.HeaderText = "Отриц.";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            // 
+            // Column4
+            // 
+            this.Column4.DataPropertyName = "Calculated";
+            this.Column4.HeaderText = "Вычисл.";
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            // 
+            // Column5
+            // 
+            this.Column5.DataPropertyName = "CodeSort";
+            this.Column5.HeaderText = "Сорт.";
+            this.Column5.Name = "Column5";
+            this.Column5.ReadOnly = true;
+            // 
             // frmBlines
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(554, 443);
+            this.ClientSize = new System.Drawing.Size(778, 443);
             this.Controls.Add(this.g);
             this.Controls.Add(this.toolStrip1);
             this.Name = "frmBlines";
@@ -146,7 +164,9 @@
         private System.Windows.Forms.ToolStripButton btnDel;
         private System.Windows.Forms.DataGridView g;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
     }
 }

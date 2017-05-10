@@ -30,11 +30,12 @@
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuBalanceEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuSprav = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuClients = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuBlines = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuBalanceEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuLoadFromExcel = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,10 +54,18 @@
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuBalanceEditor});
+            this.mnuBalanceEditor,
+            this.mnuLoadFromExcel});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(67, 20);
             this.toolStripMenuItem1.Text = "Балансы";
+            // 
+            // mnuBalanceEditor
+            // 
+            this.mnuBalanceEditor.Name = "mnuBalanceEditor";
+            this.mnuBalanceEditor.Size = new System.Drawing.Size(172, 22);
+            this.mnuBalanceEditor.Text = "Редактор";
+            this.mnuBalanceEditor.Click += new System.EventHandler(this.mnuBalanceEditor_Click);
             // 
             // mnuSprav
             // 
@@ -88,12 +97,12 @@
             this.mnuAbout.Text = "О программе";
             this.mnuAbout.Click += new System.EventHandler(this.mnuAbout_Click);
             // 
-            // mnuBalanceEditor
+            // mnuLoadFromExcel
             // 
-            this.mnuBalanceEditor.Name = "mnuBalanceEditor";
-            this.mnuBalanceEditor.Size = new System.Drawing.Size(152, 22);
-            this.mnuBalanceEditor.Text = "Редактор";
-            this.mnuBalanceEditor.Click += new System.EventHandler(this.mnuBalanceEditor_Click);
+            this.mnuLoadFromExcel.Name = "mnuLoadFromExcel";
+            this.mnuLoadFromExcel.Size = new System.Drawing.Size(172, 22);
+            this.mnuLoadFromExcel.Text = "Загрузить из Excel";
+            this.mnuLoadFromExcel.Click += new System.EventHandler(this.mnuLoadFromExcel_Click);
             // 
             // frmMain
             // 
@@ -120,6 +129,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuClients;
         private System.Windows.Forms.ToolStripMenuItem mnuBlines;
         private System.Windows.Forms.ToolStripMenuItem mnuBalanceEditor;
+        private System.Windows.Forms.ToolStripMenuItem mnuLoadFromExcel;
     }
 }
 
