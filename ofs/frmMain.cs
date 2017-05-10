@@ -80,7 +80,7 @@ namespace ofs
             if (ofd.ShowDialog() != DialogResult.OK) return;
             try
             {
-                new Utils().LoadBalance(ofd.FileName);
+                new Utils().LoadBalance(ctx, ofd.FileName);
             }
             catch (LoadExcelException e1)
             {

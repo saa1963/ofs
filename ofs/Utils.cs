@@ -12,10 +12,12 @@ namespace ofs
 {
     public class Utils
     {
-        public void LoadBalance(string fname)
+        public void LoadBalance(OfsContext ctx, string fname)
         {
             using (var package = new ExcelPackage(new FileInfo(fname)))
             {
+                var wshF2 = package.Workbook.Worksheets["Форма2"];
+                var wshNastr = package.Workbook.Worksheets["Настройки"];
                 var wsh = package.Workbook.Worksheets["Баланс"];
                 int col = 3;
                 int row = 10;
@@ -32,27 +34,63 @@ namespace ofs
                     }
                     col++;
                 }
+                Balance bal;
+                string code;
                 foreach (var cl in Cols)
                 {
                     row = 13;
-                    col = 2;
-                    wsh.Cells[row, col]
                     while (row < 56)
                     {
-
+                        var ocode = wsh.Cells[row, 2].Value;
+                        if (ocode is double)
+                        {
+                            code = ocode.ToString();
+                            if (!String.IsNullOrWhiteSpace(code))
+                            {
+                                bal = new Balance();
+                                bal.Code = code;
+                                bal.Inn = wshNastr.Cells[2, 2].Value.ToString();
+                                bal.Quater = cl.Value.Quater;
+                                bal.Year = cl.Value.Year;
+                                ocode = wsh.Cells[row, cl.Key].Value;
+                                if (ocode != null)
+                                {
+                                    bal.Sm = Convert.ToInt32(ocode);
+                                }
+                                else
+                                {
+                                    bal.Sm = 0;
+                                }
+                                ctx.Balances.Add(bal);
+                            }
+                        }
+                        row++;
                     }
                 }
-                //for (int i = 2; i <= wsh.Dimension.End.Column;
-                //        i++)
-                //{
-                //    for (int j = wsh.Dimension.Start.Row;
-                //            j <= wsh.Dimension.End.Row;
-                //            j++)
-                //    {
-                //        object cellValue = wsh.Cells[i, j].Value;
-                //    }
-                //}
+
+                col = 3;
+                row = 9;
+                DateTime? dt;
+                Cols = new Dictionary<int, QYear>();
+                while (true)
+                {
+                    dt = ToDate(wsh.Cells[row, col].Value);
+                    if (dt.HasValue)
+                    {
+                        Cols.Add(col, QYear.FromDate(dt.Value));
+                    }
+                    else
+                    {
+                        break;
+                    }
+                    col++;
+                }
             }
+        }
+
+        private DateTime? ToDate(object value)
+        {
+            
         }
     }
 
@@ -67,15 +105,15 @@ namespace ofs
             {
                 o.Quater = 4;
             }
-            else if (dt.Month == 2)
+            else if (dt.Month == 4)
             {
                 o.Quater = 1;
             }
-            else if (dt.Month == 3)
+            else if (dt.Month == 7)
             {
                 o.Quater = 2;
             }
-            else if (dt.Month == 4)
+            else if (dt.Month == 10)
             {
                 o.Quater = 3;
             }
