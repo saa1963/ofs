@@ -35,6 +35,14 @@ namespace ofs
             catch (Exception e1)
             {
                 System.Windows.Forms.MessageBox.Show(e1.Message);
+                if (e1.InnerException != null)
+                {
+                    System.Windows.Forms.MessageBox.Show(e1.InnerException.Message);
+                    if (e1.InnerException.InnerException != null)
+                    {
+                        System.Windows.Forms.MessageBox.Show(e1.InnerException.InnerException.Message);
+                    }
+                }
             }
             return rt;
         }

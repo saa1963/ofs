@@ -111,17 +111,17 @@ namespace ofs
                                 {
                                     bal.Sm = 0;
                                 }
-                                try
+                                if (ctx.Balances.Find(bal.Quater, bal.Year, bal.Inn, bal.Code) == null)
                                 {
                                     ctx.Balances.Add(bal);
                                 }
-                                catch { }
                             }
                         }
                         row++;
                     }
                 }
                 ctx.SaveChanges();
+                System.Windows.Forms.MessageBox.Show("Загрузка закончена.");
             }
         }
 
