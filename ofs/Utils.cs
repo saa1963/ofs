@@ -18,6 +18,16 @@ namespace ofs
             {
                 var wshF2 = package.Workbook.Worksheets["Форма2"];
                 var wshNastr = package.Workbook.Worksheets["Настройки"];
+                string inn = wshNastr.Cells[2, 2].Value.ToString().Trim();
+                if (ctx.Clients.Find(inn) == null)
+                {
+                    ctx.Clients.Add(new Client()
+                    {
+                        Inn = inn,
+                        Name = wshNastr.Cells[1, 2].Value.ToString()
+                    });
+                    ctx.SaveChanges();
+                }
                 var wsh = package.Workbook.Worksheets["Баланс"];
                 int col = 3;
                 int row = 10;

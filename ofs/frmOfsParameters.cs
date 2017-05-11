@@ -5,25 +5,17 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ofs
 {
-    public partial class frmBalanceParameters : Form
+    public partial class frmOfsParameters : Form
     {
         BindingSource bs = new BindingSource();
         OfsContext ctx = new OfsContext();
-        public frmBalanceParameters()
+        public frmOfsParameters()
         {
             InitializeComponent();
-            var lstYears = new List<int>();
-            for (int i = DateTime.Now.Year - 10; i < DateTime.Now.Year + 20; i++)
-            {
-                lstYears.Add(i);
-            }
-            tbYear.DataSource = lstYears;
-            tbYear.SelectedItem = DateTime.Now.Year;
             var lstQuaters = new List<int>() { 1, 2, 3, 4 };
             tbQuater.DataSource = lstQuaters;
 
@@ -38,14 +30,14 @@ namespace ofs
             get { return tbClient.SelectedValue.ToString(); }
         }
 
-        public int Year
-        {
-            get { return (int)tbYear.SelectedItem; }
-        }
-
         public int Quater
         {
             get { return (int)tbQuater.SelectedItem; }
+        }
+
+        public Client Client
+        {
+            get { return tbClient.SelectedItem as Client; }
         }
 
         private void btnOk_Click(object sender, EventArgs e)

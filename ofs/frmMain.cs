@@ -88,5 +88,29 @@ namespace ofs
                 return;
             }
         }
+
+        private void mnuOfs_Click(object sender, EventArgs e)
+        {
+            var f = new frmOfsParameters();
+            if (f.ShowDialog() == DialogResult.OK)
+            {
+                var q = ctx.Balances.Where(s => s.Inn == f.Inn && s.Quater == f.Quater).GroupBy(s => s.Year).OrderBy(s => s.Key).ToArray();
+                if (q.Length == 0)
+                {
+                    MessageBox.Show("Не введены данные.");
+                    return;
+                }
+                for (int i = 0; i < q.Length; i++)
+                {
+                    if (i == 0) continue;
+                    if (q[i].Key - q[i - 1].Key != 1)
+                    {
+                        q = q.Take(i).ToArray();
+                        break;
+                    }
+                }
+                new Utils().DoOfs(f.Inn, q);
+            }
+        }
     }
 }

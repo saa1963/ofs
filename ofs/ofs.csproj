@@ -124,6 +124,12 @@
     <Compile Include="frmClientsEdit.Designer.cs">
       <DependentUpon>frmClientsEdit.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmOfsParameters.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmOfsParameters.Designer.cs">
+      <DependentUpon>frmOfsParameters.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201705030816425_First.cs" />
     <Compile Include="Migrations\201705030816425_First.Designer.cs">
       <DependentUpon>201705030816425_First.cs</DependentUpon>
@@ -171,6 +177,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmClientsEdit.resx">
       <DependentUpon>frmClientsEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmOfsParameters.resx">
+      <DependentUpon>frmOfsParameters.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705030816425_First.resx">
       <DependentUpon>201705030816425_First.cs</DependentUpon>
