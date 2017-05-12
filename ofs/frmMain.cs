@@ -94,7 +94,8 @@ namespace ofs
             var f = new frmOfsParameters();
             if (f.ShowDialog() == DialogResult.OK)
             {
-                var q = ctx.Balances.Where(s => s.Inn == f.Inn && s.Quater == f.Quater).GroupBy(s => s.Year).OrderBy(s => s.Key).ToArray();
+                var q = ctx.Balances.Where(s => s.Inn == f.Inn).GroupBy(s => new { year = s.Year, quater = s.Quater })
+                    .OrderBy(s => s.Key.year).ThenBy(s => s.Key.quater).ToArray();
                 if (q.Length == 0)
                 {
                     MessageBox.Show("Не введены данные.");
@@ -103,21 +104,32 @@ namespace ofs
                 for (int i = 0; i < q.Length; i++)
                 {
                     if (i == 0) continue;
-                    if (q[i].Key - q[i - 1].Key != 1)
+                    if (Subtraction(q[i].Key.year, q[i].Key.quater, q[i - 1].Key.year, q[i - 1].Key.quater) != 1)
                     {
                         q = q.Take(i).ToArray();
                         break;
                     }
                 }
-                int quater;
-                if (f.Quater == 1)
-                    quater = 4;
-                else
-                    quater = f.Quater - 1;
-                var q0 = ctx.Balances.Where(s => s.Inn == f.Inn && s.Quater == quater).GroupBy(s => s.Year).OrderBy(s => s.Key).ToArray();
-                var ofs = new Utils().DoOfs(f.Inn, f.Quater, q, q0);
+                var ofs = new Utils().DoOfs(f.Inn, f.Quater, q);
                 new Utils().OfsToExcel(ofs);
             }
+        }
+
+        private int Subtraction(int year1, int quater1, int year2, int quater2)
+        {
+            if (year1 == year2)
+            {
+                return quater1 - quater2;
+            }
+            else if (year1 - year2 == 1)
+            {
+                if (quater1 == 1 && quater2 == 4)
+                    return 1;
+                else
+                    return 0;
+            }
+            else
+                return 0;
         }
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
