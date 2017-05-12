@@ -27,6 +27,11 @@ namespace ofs
         public Bline Bline { get; set; }
         [ForeignKey("Inn")]
         public Client Client { get; set; }
+        [NotMapped]
+        public decimal Smd
+        {
+            get { return Convert.ToDecimal(Sm); }
+        }
 
     }
 }

@@ -32,12 +32,12 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuBalanceEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuLoadFromExcel = new System.Windows.Forms.ToolStripMenuItem();
+            this.отчетыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuOfs = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuSprav = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuClients = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuBlines = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.отчетыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuOfs = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -77,6 +77,21 @@
             this.mnuLoadFromExcel.Text = "Загрузить из Excel";
             this.mnuLoadFromExcel.Click += new System.EventHandler(this.mnuLoadFromExcel_Click);
             // 
+            // отчетыToolStripMenuItem
+            // 
+            this.отчетыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuOfs});
+            this.отчетыToolStripMenuItem.Name = "отчетыToolStripMenuItem";
+            this.отчетыToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
+            this.отчетыToolStripMenuItem.Text = "Отчеты";
+            // 
+            // mnuOfs
+            // 
+            this.mnuOfs.Name = "mnuOfs";
+            this.mnuOfs.Size = new System.Drawing.Size(252, 22);
+            this.mnuOfs.Text = "Оценка финансового состояния";
+            this.mnuOfs.Click += new System.EventHandler(this.mnuOfs_Click);
+            // 
             // mnuSprav
             // 
             this.mnuSprav.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -107,21 +122,6 @@
             this.mnuAbout.Text = "О программе";
             this.mnuAbout.Click += new System.EventHandler(this.mnuAbout_Click);
             // 
-            // отчетыToolStripMenuItem
-            // 
-            this.отчетыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuOfs});
-            this.отчетыToolStripMenuItem.Name = "отчетыToolStripMenuItem";
-            this.отчетыToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
-            this.отчетыToolStripMenuItem.Text = "Отчеты";
-            // 
-            // mnuOfs
-            // 
-            this.mnuOfs.Name = "mnuOfs";
-            this.mnuOfs.Size = new System.Drawing.Size(252, 22);
-            this.mnuOfs.Text = "Оценка финансового состояния";
-            this.mnuOfs.Click += new System.EventHandler(this.mnuOfs_Click);
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -131,6 +131,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "frmMain";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

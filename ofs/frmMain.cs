@@ -109,7 +109,33 @@ namespace ofs
                         break;
                     }
                 }
-                new Utils().DoOfs(f.Inn, q);
+                int quater;
+                if (f.Quater == 1)
+                    quater = 4;
+                else
+                    quater = f.Quater - 1;
+                var q0 = ctx.Balances.Where(s => s.Inn == f.Inn && s.Quater == quater).GroupBy(s => s.Year).OrderBy(s => s.Key).ToArray();
+                var ofs = new Utils().DoOfs(f.Inn, f.Quater, q, q0);
+                new Utils().OfsToExcel(ofs);
+            }
+        }
+
+        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            DeleteTempFiles();
+        }
+
+        private void DeleteTempFiles()
+        {
+            var files = Directory.GetFiles(Path.GetTempPath(), "__ofs__*.xlsx");
+            foreach (var f in files)
+            {
+                try
+                {
+                    File.Delete(f);
+                }
+                catch
+                { }
             }
         }
     }

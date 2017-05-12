@@ -54,5 +54,11 @@ namespace ofs
                 tbClient.SelectedValue = f.SelectedClient.Inn;
             }
         }
+
+        private void btnOk_Click_1(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
+            Close();
+        }
     }
 }

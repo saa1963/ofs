@@ -55,6 +55,7 @@
             this.btnOk.TabIndex = 16;
             this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click_1);
             // 
             // tbQuater
             // 
