@@ -312,7 +312,7 @@ namespace ofs
             }
         }
 
-        internal Ofs[] DoOfs(string inn, int quater, IGrouping<object, Balance>[] q)
+        internal Ofs[] DoOfs(string inn, int quater, IGrouping<QYear, Balance>[] q)
         {
             var days = new Dictionary<int, decimal>()
                 { {1, 90m}, { 2, 181m}, {3, 273m}, {4, 365m} };
@@ -320,7 +320,8 @@ namespace ofs
             for (int i = 0; i < q.Length; i++)
             {
                 var o = q[i];
-                if ((int)o.Key.GetType().GetProperty("quater").GetValue(o.Key, null) != quater) continue;
+                if (o.Key.Quater != quater) continue;
+                var o1 = q.FirstOrDefault(s => s.Key.MyEquals(o.Key.БлижайшийМинимальный4Квартал()));
                 var ofs = new Ofs();
                 ofs.Cha = o.Single(s => s.Code == "1300").Sm + o.Single(s => s.Code == "1530").Sm;
                 ofs.Chp = o.Single(s => s.Code == "2400").Sm;
@@ -331,11 +332,11 @@ namespace ofs
                     / o.Single(s => s.Code == "1700").Smd, 2, MidpointRounding.AwayFromZero);
                 ofs.Kir = o.Single(s => s.Code == "1300").Sm;
 
-                //if (o1 != null)
-                //    ofs.Koa = Decimal.Round(((o1.Single(s => s.Code == "1600").Smd + o.Single(s => s.Code == "1600").Smd)
-                //        * 0.5m / o.Single(s => s.Code == "2110").Smd) * days[quater], 0, MidpointRounding.AwayFromZero);
-                //else
-                //    ofs.Koa = 0;
+                if (o1 != null)
+                    ofs.Koa = Decimal.Round(((o1.Single(s => s.Code == "1600").Smd + o.Single(s => s.Code == "1600").Smd)
+                        * 0.5m / o.Single(s => s.Code == "2110").Smd) * days[quater], 0, MidpointRounding.AwayFromZero);
+                else
+                    ofs.Koa = 0;
 
                 ofs.Kosos = Decimal.Round((o.Single(s => s.Code == "1300").Smd + o.Single(s => s.Code == "1530").Smd - o.Single(s => s.Code == "1100").Smd) 
                     / o.Single(s => s.Code == "1200").Smd, 2, MidpointRounding.AwayFromZero);
@@ -350,20 +351,21 @@ namespace ofs
                 ofs.Pop = o.Single(s => s.Code == "2200").Sm;
                 ofs.Quater = quater;
                 ofs.Rp = Decimal.Round(o.Single(s => s.Code == "2200").Smd / o.Single(s => s.Code == "2110").Smd, 2, MidpointRounding.AwayFromZero);
-                //if (o1 != null)
-                //    ofs.Rsk = Decimal.Round(o.Single(s => s.Code == "2300").Smd / ((o1.Single(s => s.Code == "1300").Smd + 
-                //        o1.Single(s => s.Code == "1530").Smd + o.Single(s => s.Code == "1300").Smd + o.Single(s => s.Code == "1530").Smd) 
-                //        * 0.5m) * 365m / days[quater], 2, MidpointRounding.AwayFromZero);
-                //else
-                //    ofs.Rsk = 0;
+                if (o1 != null)
+                    ofs.Rsk = Decimal.Round(o.Single(s => s.Code == "2300").Smd / ((o1.Single(s => s.Code == "1300").Smd + 
+                        o1.Single(s => s.Code == "1530").Smd + o.Single(s => s.Code == "1300").Smd + o.Single(s => s.Code == "1530").Smd) 
+                        * 0.5m) * 365m / days[quater], 2, MidpointRounding.AwayFromZero);
+                else
+                    ofs.Rsk = 0;
                 ofs.Sp = o.Single(s => s.Code == "2120").Sm;
                 ofs.Va = o.Single(s => s.Code == "1100").Sm;
                 ofs.Vb = o.Single(s => s.Code == "1600").Sm;
                 ofs.Vir = o.Single(s => s.Code == "2110").Sm;
-                ofs.Year = (int)o.Key.GetType().GetProperty("year").GetValue(o.Key, null);
+                ofs.Year = o.Key.Year;
                 ofs.Zap = o.Single(s => s.Code == "1210").Sm;
                 rt[i] = ofs;
             }
+            rt = rt.Where(s => s != null).OrderBy(s => s.Year).ThenBy(s => s.Quater).ToArray();
             return rt;
         }
 
@@ -419,7 +421,7 @@ namespace ofs
         }
     }
 
-    class QYear
+    public class QYear
     {
         public int Year { get; set; }
         public int Quater { get; set; }
@@ -455,6 +457,23 @@ namespace ofs
                 o.Year = dt.Year;
             }
             return o;
+        }
+
+        public static QYear operator -(QYear q1, int n)
+        {
+            int qv = (q1.Year * 4 + q1.Quater - n);
+            return new QYear() { Year = qv / 4, Quater = qv % 4 };
+        }
+
+        public QYear БлижайшийМинимальный4Квартал()
+        {
+            return new QYear() { Year = this.Year - 1, Quater = 4};
+        }
+
+        public bool MyEquals(QYear obj)
+        {
+            var o = obj as QYear;
+            return this.Year == o.Year && this.Quater == o.Quater;
         }
     }
 
