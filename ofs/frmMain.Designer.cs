@@ -38,6 +38,7 @@
             this.mnuClients = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuBlines = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuBalances = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -80,7 +81,8 @@
             // отчетыToolStripMenuItem
             // 
             this.отчетыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuOfs});
+            this.mnuOfs,
+            this.mnuBalances});
             this.отчетыToolStripMenuItem.Name = "отчетыToolStripMenuItem";
             this.отчетыToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
             this.отчетыToolStripMenuItem.Text = "Отчеты";
@@ -122,6 +124,13 @@
             this.mnuAbout.Text = "О программе";
             this.mnuAbout.Click += new System.EventHandler(this.mnuAbout_Click);
             // 
+            // mnuBalances
+            // 
+            this.mnuBalances.Name = "mnuBalances";
+            this.mnuBalances.Size = new System.Drawing.Size(252, 22);
+            this.mnuBalances.Text = "Баланс";
+            this.mnuBalances.Click += new System.EventHandler(this.mnuBalances_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -152,6 +161,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuLoadFromExcel;
         private System.Windows.Forms.ToolStripMenuItem отчетыToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mnuOfs;
+        private System.Windows.Forms.ToolStripMenuItem mnuBalances;
     }
 }
 

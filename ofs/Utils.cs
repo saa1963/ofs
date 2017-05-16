@@ -160,6 +160,98 @@ namespace ofs
             }
         }
 
+        internal void DoBalances(Client selectedClient)
+        {
+            using (var ctx = new OfsContext())
+            {
+                using (var package = new ExcelPackage())
+                {
+                    var wsh = package.Workbook.Worksheets.Add("Лист1");
+
+                    wsh.Column(1).Width = 32.75;
+                    wsh.DefaultColWidth = 12;
+                    wsh.Column(1).Style.WrapText = true;
+                    wsh.Row(7).Style.WrapText = true;
+                    wsh.Row(7).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    wsh.Row(8).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                    wsh.Cells[1, 1].Value = "Бухгалтерский баланс";
+                    wsh.Cells[1, 1].Style.Font.Bold = true;
+                    wsh.Cells[1, 1].Style.Font.Size = 14;
+                    wsh.Cells[3, 1].Value = "Организация";
+                    wsh.Cells[3, 2].Value = ctx.Clients.Find(selectedClient.Inn).Name;
+                    wsh.Cells[3, 2].Style.Font.Bold = true;
+                    wsh.Cells[4, 1].Value = "ИНН";
+                    wsh.Cells[4, 2].Value = selectedClient.Inn;
+                    wsh.Cells[4, 2].Style.Font.Bold = true;
+                    wsh.Cells[5, 1].Value = "Отрасль";
+                    wsh.Cells[5, 2].Style.Font.Bold = true;
+                    wsh.Cells[6, 1].Value = "Единица измерения (абсолютные показатели)";
+                    wsh.Cells[6, 2].Value = "тыс.руб.";
+                    wsh.Cells[6, 2].Style.Font.Bold = true;
+
+                    wsh.Cells[10, 1].Value = "Наименование показателя";
+                    wsh.Cells[10, 2].Value = "Код";
+
+                    var bals = ctx.Balances.Where(s => s.Inn == selectedClient.Inn && s.Code == "1100").OrderBy(s => s.Year).ThenBy(s => s.Quater).ToList();
+                    var col = 3;
+                    foreach (var b in bals)
+                    {
+                        wsh.Cells[10, col].Value = 
+                            $"на {QYear.DateFromQuater(new QYear() { Year = b.Year, Quater = b.Quater}).ToString("dd.MM.yyyy")}";
+                        col++;
+                    }
+
+                    //var bal = ctx.Balances.Include("Bline").Where(s => s.Inn == selectedClient.Inn && s.Bline.Code.Substring(0, 1) == "1").
+                    var bl = ctx.Blines.Where(s => s.Code.Substring(0, 1) == "1").OrderBy(s => s.CodeSort).ToList();
+                    var ins = bl.IndexOf(bl.Single(s => s.Code == "1110"));
+                    bl.Insert(ins, new Bline() { Name = "АКТИВ", Code = "" });
+                    bl.Insert(ins + 1, new Bline() { Name = "I. Внеоборотные активы", Code = "" });
+                    ins = bl.IndexOf(bl.Single(s => s.Code == "1210"));
+                    bl.Insert(ins, new Bline() { Name = "II. Оборотные активы", Code = "" });
+                    ins = bl.IndexOf(bl.Single(s => s.Code == "1310"));
+                    bl.Insert(ins, new Bline() { Name = "ПАССИВ", Code = "" });
+                    bl.Insert(ins + 1, new Bline() { Name = "III. Капитал и резервы", Code = "" });
+                    ins = bl.IndexOf(bl.Single(s => s.Code == "1410"));
+                    bl.Insert(ins, new Bline() { Name = "IV. Долгосрочные обязательства", Code = "" });
+                    ins = bl.IndexOf(bl.Single(s => s.Code == "1510"));
+                    bl.Insert(ins, new Bline() { Name = "IV. Краткосрочные обязательства", Code = "" });
+
+                    var row = 11;
+                    foreach (var bline in bl)
+                    {
+                        wsh.Cells[row, 1].Value = bline.Name;
+                        wsh.Cells[row, 2].Value = bline.Code;
+                        if (bline.Code != "")
+                        {
+                            bals = ctx.Balances.Where(s => s.Inn == selectedClient.Inn && s.Code == bline.Code).OrderBy(s => s.Year).ThenBy(s => s.Quater).ToList();
+                            col = 3;
+                            foreach (var b in bals)
+                            {
+                                wsh.Cells[row, col].Value = b.Sm;
+                                col++;
+                            }
+                        }
+                        row++;
+                    }
+
+
+                    wsh.Cells[10, 1, wsh.Dimension.End.Row, wsh.Dimension.End.Column].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                    wsh.Cells[10, 1, wsh.Dimension.End.Row, wsh.Dimension.End.Column].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                    wsh.Cells[10, 1, wsh.Dimension.End.Row, wsh.Dimension.End.Column].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                    wsh.Cells[10, 1, wsh.Dimension.End.Row, wsh.Dimension.End.Column].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                    package.File = new FileInfo(Path.Combine(Path.GetTempPath(), "__ofs__" + Guid.NewGuid().ToString() + ".xlsx"));
+                    package.Save();
+
+                    Process prc = new Process();
+                    prc.StartInfo.Arguments = "\"" + package.File + "\"";
+                    prc.StartInfo.FileName = "excel.exe";
+                    prc.Start();
+                }
+            }
+        }
+
         internal void OfsToExcel(Ofs[] ofs)
         {
             if (ofs.Length == 0) return;
@@ -531,6 +623,23 @@ namespace ofs
                 o.Year = dt.Year;
             }
             return o;
+        }
+
+        public static DateTime DateFromQuater(QYear q)
+        {
+            switch (q.Quater)
+            {
+                case 1:
+                    return new DateTime(q.Year, 4, 1);
+                case 2:
+                    return new DateTime(q.Year, 7, 1);
+                case 3:
+                    return new DateTime(q.Year, 10, 1);
+                case 4:
+                    return new DateTime(q.Year + 1, 1, 1);
+                default:
+                    return DateTime.MinValue;
+            }
         }
 
         public static QYear operator -(QYear q1, int n)
