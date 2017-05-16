@@ -41,7 +41,10 @@ namespace ofs
                 {
                     if (wsh.Cells[row, col].Value is DateTime)
                     {
-                        Cols.Add(col, QYear.FromDate((DateTime)wsh.Cells[row, col].Value));
+                        if (Convert.ToInt32(wsh.Cells[31, col].Value) > 0)
+                        {
+                            Cols.Add(col, QYear.FromDate((DateTime)wsh.Cells[row, col].Value));
+                        }
                     }
                     else
                     {
@@ -99,7 +102,10 @@ namespace ofs
                     dt = ToDate(wshF2.Cells[row, col].Value);
                     if (dt.HasValue)
                     {
-                        Cols.Add(col, QYear.FromDate(dt.Value));
+                        if (Convert.ToInt32(wsh.Cells[31, col].Value) > 0)
+                        {
+                            Cols.Add(col, QYear.FromDate(dt.Value));
+                        }
                     }
                     else
                     {
@@ -335,35 +341,96 @@ namespace ofs
                 ofs.Dz = o.Single(s => s.Code == "1230").Sm;
                 ofs.Fv = o.Single(s => s.Code == "1240").Sm;
                 ofs.Inn = inn;
-                ofs.Kfn = Decimal.Round((o.Single(s => s.Code == "1300").Smd + o.Single(s => s.Code == "1530").Smd) 
-                    / o.Single(s => s.Code == "1700").Smd, 2, MidpointRounding.AwayFromZero);
+                if (o.Single(s => s.Code == "1700").Smd != 0)
+                {
+                    ofs.Kfn = Decimal.Round((o.Single(s => s.Code == "1300").Smd + o.Single(s => s.Code == "1530").Smd)
+                        / o.Single(s => s.Code == "1700").Smd, 2, MidpointRounding.AwayFromZero);
+                }
+                else
+                {
+                    ofs.Kfn = 0;
+                }
                 ofs.Kir = o.Single(s => s.Code == "1300").Sm;
 
                 if (o1 != null)
-                    ofs.Koa = Decimal.Round(((o1.Single(s => s.Code == "1600").Smd + o.Single(s => s.Code == "1600").Smd)
-                        * 0.5m / o.Single(s => s.Code == "2110").Smd) * days[quater], 0, MidpointRounding.AwayFromZero);
+                    if (o.Single(s => s.Code == "2110").Smd != 0)
+                    {
+                        ofs.Koa = Decimal.Round(((o1.Single(s => s.Code == "1600").Smd + o.Single(s => s.Code == "1600").Smd)
+                            * 0.5m / o.Single(s => s.Code == "2110").Smd) * days[quater], 0, MidpointRounding.AwayFromZero);
+                    }
+                    else
+                    {
+                        ofs.Koa = 0;
+                    }
                 else
+                {
                     ofs.Koa = 0;
+                }
 
-                ofs.Kosos = Decimal.Round((o.Single(s => s.Code == "1300").Smd + o.Single(s => s.Code == "1530").Smd - o.Single(s => s.Code == "1100").Smd) 
-                    / o.Single(s => s.Code == "1200").Smd, 2, MidpointRounding.AwayFromZero);
-                ofs.Kp = Decimal.Round((o.Single(s => s.Code == "1210").Smd + o.Single(s => s.Code == "1220").Smd + 
-                    o.Single(s => s.Code == "1230").Smd + o.Single(s => s.Code == "1240").Smd + o.Single(s => s.Code == "1250").Smd) 
-                    / (o.Single(s => s.Code == "1500").Smd - o.Single(s => s.Code == "1530").Smd), 2, MidpointRounding.AwayFromZero);
-                ofs.Ksova = Decimal.Round(o.Single(s => s.Code == "1200").Smd / o.Single(s => s.Code == "1100").Smd, 2, MidpointRounding.AwayFromZero);
+                if (o.Single(s => s.Code == "1200").Smd != 0)
+                {
+                    ofs.Kosos = Decimal.Round((o.Single(s => s.Code == "1300").Smd + o.Single(s => s.Code == "1530").Smd - o.Single(s => s.Code == "1100").Smd)
+                        / o.Single(s => s.Code == "1200").Smd, 2, MidpointRounding.AwayFromZero);
+                }
+                else
+                {
+                    ofs.Kosos = 0;
+                }
+                if (o.Single(s => s.Code == "1500").Smd - o.Single(s => s.Code == "1530").Smd != 0)
+                {
+                    ofs.Kp = Decimal.Round((o.Single(s => s.Code == "1210").Smd + o.Single(s => s.Code == "1220").Smd +
+                        o.Single(s => s.Code == "1230").Smd + o.Single(s => s.Code == "1240").Smd + o.Single(s => s.Code == "1250").Smd)
+                        / (o.Single(s => s.Code == "1500").Smd - o.Single(s => s.Code == "1530").Smd), 2, MidpointRounding.AwayFromZero);
+                }
+                else
+                {
+                    ofs.Kosos = 0;
+                }
+                if (o.Single(s => s.Code == "1100").Smd != 0)
+                {
+                    ofs.Ksova = Decimal.Round(o.Single(s => s.Code == "1200").Smd / o.Single(s => s.Code == "1100").Smd, 2, MidpointRounding.AwayFromZero);
+                }
+                else
+                {
+                    ofs.Ksova = 0;
+                }
                 ofs.Np = o.Single(s => s.Code == "1370").Sm;
                 ofs.Oa = o.Single(s => s.Code == "1200").Sm;
-                ofs.Okl = Decimal.Round(o.Single(s => s.Code == "1200").Smd / o.Single(s => s.Code == "1500").Smd, 2, MidpointRounding.AwayFromZero);
+                if (o.Single(s => s.Code == "1500").Smd != 0)
+                {
+                    ofs.Okl = Decimal.Round(o.Single(s => s.Code == "1200").Smd / o.Single(s => s.Code == "1500").Smd, 2, MidpointRounding.AwayFromZero);
+                }
+                else
+                {
+                    ofs.Okl = 0;
+                }
                 ofs.Os = o.Single(s => s.Code == "1150").Sm;
                 ofs.Pop = o.Single(s => s.Code == "2200").Sm;
                 ofs.Quater = quater;
-                ofs.Rp = Decimal.Round(o.Single(s => s.Code == "2200").Smd / o.Single(s => s.Code == "2110").Smd, 2, MidpointRounding.AwayFromZero);
-                if (o1 != null)
-                    ofs.Rsk = Decimal.Round(o.Single(s => s.Code == "2300").Smd / ((o1.Single(s => s.Code == "1300").Smd + 
-                        o1.Single(s => s.Code == "1530").Smd + o.Single(s => s.Code == "1300").Smd + o.Single(s => s.Code == "1530").Smd) 
-                        * 0.5m) * 365m / days[quater], 2, MidpointRounding.AwayFromZero);
+                if (o.Single(s => s.Code == "2110").Smd != 0)
+                {
+                    ofs.Rp = Decimal.Round(o.Single(s => s.Code == "2200").Smd / o.Single(s => s.Code == "2110").Smd, 2, MidpointRounding.AwayFromZero);
+                }
                 else
+                {
+                    ofs.Rp = 0;
+                }
+                if (o1 != null)
+                    if (o1.Single(s => s.Code == "1300").Smd +
+                        o1.Single(s => s.Code == "1530").Smd + o.Single(s => s.Code == "1300").Smd + o.Single(s => s.Code == "1530").Smd != 0)
+                    {
+                        ofs.Rsk = Decimal.Round(o.Single(s => s.Code == "2300").Smd / ((o1.Single(s => s.Code == "1300").Smd +
+                            o1.Single(s => s.Code == "1530").Smd + o.Single(s => s.Code == "1300").Smd + o.Single(s => s.Code == "1530").Smd)
+                            * 0.5m) * 365m / days[quater], 2, MidpointRounding.AwayFromZero);
+                    }
+                    else
+                    {
+                        ofs.Rsk = 0;
+                    }
+                else
+                {
                     ofs.Rsk = 0;
+                }
                 ofs.Sp = o.Single(s => s.Code == "2120").Sm;
                 ofs.Va = o.Single(s => s.Code == "1100").Sm;
                 ofs.Vb = o.Single(s => s.Code == "1600").Sm;

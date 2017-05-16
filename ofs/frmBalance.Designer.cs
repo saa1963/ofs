@@ -47,7 +47,7 @@
             this.g.Dock = System.Windows.Forms.DockStyle.Fill;
             this.g.Location = new System.Drawing.Point(0, 0);
             this.g.Name = "g";
-            this.g.Size = new System.Drawing.Size(626, 468);
+            this.g.Size = new System.Drawing.Size(626, 633);
             this.g.TabIndex = 0;
             this.g.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.g_CellFormatting);
             this.g.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.g_CellValueChanged);
@@ -77,10 +77,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(626, 468);
+            this.ClientSize = new System.Drawing.Size(626, 633);
             this.Controls.Add(this.g);
             this.Name = "frmBalance";
-            this.Text = "frmBalance";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmBalance_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.g)).EndInit();
             this.ResumeLayout(false);
