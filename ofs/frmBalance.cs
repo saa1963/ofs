@@ -96,7 +96,14 @@ namespace ofs
             }
             else
             {
-                ctx.SaveChanges();
+                if (lst.Single(s => s.Code == "1600").Sm > 0 || lst.Single(s => s.Code == "2400").Sm > 0)
+                {
+                    ctx.SaveChanges();
+                }
+                else
+                {
+                    MessageBox.Show("Нет данных для сохранения.");
+                }
             }
         }
     }
