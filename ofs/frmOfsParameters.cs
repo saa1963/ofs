@@ -12,11 +12,12 @@ namespace ofs
     public partial class frmOfsParameters : Form
     {
         BindingSource bs = new BindingSource();
+
         OfsContext ctx = new OfsContext();
         public frmOfsParameters()
         {
             InitializeComponent();
-            var lstQuaters = new List<int>() { 1, 2, 3, 4 };
+            var lstQuaters = new List<string>() { "1 квартал", "1 полугодие", "9 месяцев", "Год" };
             tbQuater.DataSource = lstQuaters;
 
             bs.DataSource = ctx.Clients.OrderBy(s => s.Inn).ToList();
@@ -32,7 +33,7 @@ namespace ofs
 
         public int Quater
         {
-            get { return (int)tbQuater.SelectedItem; }
+            get { return tbQuater.SelectedIndex + 1; }
         }
 
         public Client Client

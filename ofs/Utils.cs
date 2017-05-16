@@ -8,6 +8,7 @@ using OfficeOpenXml.Style;
 using System.IO;
 using System.Diagnostics;
 using System.Reflection;
+using System.Data.SqlClient;
 
 namespace ofs
 {
@@ -29,6 +30,8 @@ namespace ofs
                     });
                     ctx.SaveChanges();
                 }
+
+                ctx.Database.ExecuteSqlCommand("delete from balances where inn = @inn", new SqlParameter("@inn", inn));
 
                 var wsh = package.Workbook.Worksheets["Баланс"];
                 int col = 3;
@@ -111,6 +114,10 @@ namespace ofs
                     while (row < 35)
                     {
                         var ocode = wshF2.Cells[row, 2].Value;
+                        if (ocode is double)
+                        {
+                            ocode = ocode.ToString();
+                        }
                         if (ocode is string)
                         {
                             code = ocode.ToString();

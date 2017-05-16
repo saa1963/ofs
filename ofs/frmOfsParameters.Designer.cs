@@ -63,7 +63,7 @@
             this.tbQuater.FormattingEnabled = true;
             this.tbQuater.Location = new System.Drawing.Point(26, 83);
             this.tbQuater.Name = "tbQuater";
-            this.tbQuater.Size = new System.Drawing.Size(71, 21);
+            this.tbQuater.Size = new System.Drawing.Size(125, 21);
             this.tbQuater.TabIndex = 15;
             // 
             // label3

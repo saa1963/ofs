@@ -128,6 +128,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(799, 470);
             this.Controls.Add(this.menuStrip1);
+            this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "frmMain";
             this.Text = "Form1";

@@ -100,7 +100,7 @@
             this.tbQuater.FormattingEnabled = true;
             this.tbQuater.Location = new System.Drawing.Point(117, 75);
             this.tbQuater.Name = "tbQuater";
-            this.tbQuater.Size = new System.Drawing.Size(71, 21);
+            this.tbQuater.Size = new System.Drawing.Size(119, 21);
             this.tbQuater.TabIndex = 6;
             // 
             // btnOk

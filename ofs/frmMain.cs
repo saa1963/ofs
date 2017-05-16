@@ -62,14 +62,11 @@ namespace ofs
                     ctx.SaveChanges();
                 }
             }
-            lst = ctx.Balances.Where
+            lst = ctx.Balances.Include("Bline").Where
                 (s => s.Inn == f.Inn && s.Year == f.Year && s.Quater == f.Quater)
-                .OrderBy(s => s.Code).ToList();
-
-            if (Controls.ContainsKey("g"))
-            {
-                Controls.RemoveByKey("g");
-            }
+                .OrderBy(s => s.Bline.CodeSort).ToList();
+            var f1 = new frmBalance(ctx, lst);
+            f1.ShowDialog();
         }
 
         private void mnuLoadFromExcel_Click(object sender, EventArgs e)
