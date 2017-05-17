@@ -156,5 +156,14 @@ namespace ofs
                 new Utils().DoBalances(f.SelectedClient);
             }
         }
+
+        private void mnuF2_Click(object sender, EventArgs e)
+        {
+            var f = new frmClients();
+            if (f.ShowDialog() == DialogResult.OK)
+            {
+                new Utils().DoF2(f.SelectedClient);
+            }
+        }
     }
 }

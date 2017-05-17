@@ -52,12 +52,12 @@ namespace ofs
 
         private void CalculateFields()
         {
+            int pos = bs.Position;
             for (int i = 0; i < g.Rows.Count - 1; i++)
             {
                 var balance = g.Rows[i].DataBoundItem as Balance;
                 if (!String.IsNullOrWhiteSpace(balance.Bline.Calculated))
                 {
-                    //var tokens = stf.getTokens(balance.Bline.Calculated);
                     var rpn = RPN.CreateRPN(RPN.StandartToRPN(balance.Bline.Calculated));
                     foreach (var lx in rpn.Ast)
                     {
@@ -68,34 +68,10 @@ namespace ofs
                     }
                     rpn.Execute();
                     balance.Sm = Convert.ToInt32(rpn.Result);
-                    //expr = "";
-                    //for (int j = 0; j < tokens.Count; j++)
-                    //{
-                    //    if (!stf._operators.Contains(tokens[j]))
-                    //    {
-                    //        tokens[j] = lst.Single(s => s.Code == tokens[j]).Sm.ToString();
-                    //    }
-                    //    expr += tokens[j];
-                    //}
-                    //expr = expr.Replace("+-", "-").Replace("--", "+");
-                    //try
-                    //{
-                    //    //balance.Sm = Convert.ToInt32(stf.Eval(expr));
-                    //    string postfix = RPN.StandartToRPN(expr);
-                    //    RPN rpn = RPN.CreateRPN(postfix);
-                    //    //rpn.SetVariable("x", 42.0);
-                    //    rpn.Execute();
-                    //    balance.Sm = Convert.ToInt32(rpn.Result);
-
-                    //}
-                    //catch
-                    //{
-                    //    MessageBox.Show("Ошибка вычисления итогов.");
-                    //    return;
-                    //}
                 }
             }
             RefreshData();
+            bs.Position = pos;
         }
 
         
