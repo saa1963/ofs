@@ -23,7 +23,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>5</ApplicationRevision>
+    <ApplicationRevision>6</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -166,8 +166,8 @@
     <Compile Include="OfsContext.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RPN.cs" />
     <Compile Include="SortableBindingList.cs" />
-    <Compile Include="StringToFormula.cs" />
     <Compile Include="Utils.cs" />
     <EmbeddedResource Include="frmBalance.resx">
       <DependentUpon>frmBalance.cs</DependentUpon>
