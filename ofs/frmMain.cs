@@ -101,11 +101,11 @@ namespace ofs
                 for (int i = 0; i < q.Length; i++)
                 {
                     if (i == 0) continue;
-                    if (Subtraction(q[i].Key.Year, q[i].Key.Quater, q[i - 1].Key.Year, q[i - 1].Key.Quater) != 1)
-                    {
-                        q = q.Take(i).ToArray();
-                        break;
-                    }
+                    //if (Subtraction(q[i].Key.Year, q[i].Key.Quater, q[i - 1].Key.Year, q[i - 1].Key.Quater) != 1)
+                    //{
+                    //    q = q.Take(i).ToArray();
+                    //    break;
+                    //}
                 }
                 var ofs = new Utils().DoOfs(f.Inn, f.Quater, q);
                 new Utils().OfsToExcel(ofs);
