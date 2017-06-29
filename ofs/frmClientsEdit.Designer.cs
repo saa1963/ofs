@@ -34,6 +34,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.tbOkved = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -72,10 +74,10 @@
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(79, 137);
+            this.btnOk.Location = new System.Drawing.Point(77, 184);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(83, 29);
-            this.btnOk.TabIndex = 4;
+            this.btnOk.TabIndex = 6;
             this.btnOk.Text = "ОК";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
@@ -83,12 +85,29 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(193, 137);
+            this.btnCancel.Location = new System.Drawing.Point(191, 184);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(83, 29);
-            this.btnCancel.TabIndex = 5;
+            this.btnCancel.TabIndex = 7;
             this.btnCancel.Text = "Отмена";
             this.btnCancel.UseVisualStyleBackColor = true;
+            // 
+            // tbOkved
+            // 
+            this.tbOkved.Location = new System.Drawing.Point(63, 128);
+            this.tbOkved.MaxLength = 10;
+            this.tbOkved.Name = "tbOkved";
+            this.tbOkved.Size = new System.Drawing.Size(136, 20);
+            this.tbOkved.TabIndex = 5;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(12, 131);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(45, 13);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "ОКВЭД";
             // 
             // frmClientsEdit
             // 
@@ -96,7 +115,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(354, 190);
+            this.ClientSize = new System.Drawing.Size(354, 249);
+            this.Controls.Add(this.tbOkved);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.tbName);
@@ -121,5 +142,7 @@
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnCancel;
         public System.Windows.Forms.TextBox tbInn;
+        public System.Windows.Forms.TextBox tbOkved;
+        private System.Windows.Forms.Label label3;
     }
 }

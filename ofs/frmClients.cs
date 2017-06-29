@@ -54,7 +54,7 @@ namespace ofs
                 }
                 else
                 {
-                    o = new Client() { Inn = f.Inn, Name = f.NameClient };
+                    o = new Client() { Inn = f.Inn, Name = f.NameClient, Okved = f.Okved };
                     ctx.Clients.Add(o);
                     ctx.SaveChanges();
                     RefreshData(o);
@@ -70,9 +70,11 @@ namespace ofs
             f.Inn = o.Inn;
             f.NameClient = o.Name;
             f.tbInn.Enabled = false;
+            f.Okved = o.Okved ?? "";
             if (f.ShowDialog() == DialogResult.OK)
             {
                 o.Name = f.NameClient;
+                o.Okved = f.Okved;
                 ctx.SaveChanges();
                 RefreshData(o);
             }
@@ -98,6 +100,7 @@ namespace ofs
             Size = Settings.Default.frmClients_Size;
             g.Columns[0].Width = Settings.Default.frmClients_Col0;
             g.Columns[1].Width = Settings.Default.frmClients_Col1;
+            g.Columns[2].Width = Settings.Default.frmClients_Col2;
         }
 
         private void frmClients_FormClosing(object sender, FormClosingEventArgs e)
@@ -106,6 +109,7 @@ namespace ofs
             Settings.Default.frmClients_Size = Size;
             Settings.Default.frmClients_Col0 = g.Columns[0].Width;
             Settings.Default.frmClients_Col1 = g.Columns[1].Width;
+            Settings.Default.frmClients_Col2 = g.Columns[2].Width;
             Settings.Default.Save();
         }
 

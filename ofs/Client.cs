@@ -16,5 +16,7 @@ namespace ofs
         [Required]
         [MaxLength(500)]
         public string Name { get; set; }
+        [MaxLength(10)]
+        public string Okved { get; set; }
     }
 }

@@ -401,6 +401,7 @@ namespace ofs
                     wsh.Cells[31, 1].Value = "Себестоимость продаж";
                     wsh.Cells[32, 1].Value = "Прибыль от продаж";
                     wsh.Cells[33, 1].Value = "Чистая прибыль";
+                    wsh.Cells[35, 1].Value = "Обобщающий результат";
 
                     int j = 2;
                     for (int i = 0; i < ofs.Length; i++)
@@ -432,6 +433,7 @@ namespace ofs
                         wsh.Cells[31, j].Value = ofs[i].Sp;
                         wsh.Cells[32, j].Value = ofs[i].Pop;
                         wsh.Cells[33, j].Value = ofs[i].Chp;
+                        wsh.Cells[35, j].Value = ofs[i].getRop();
                         j++;
                         if (j == 3) continue;
                         if (j == 4)
@@ -626,6 +628,8 @@ namespace ofs
             rt = rt.Where(s => s != null).OrderBy(s => s.Year).ThenBy(s => s.Quater).ToArray();
             return rt;
         }
+
+        
 
         private DateTime? ToDate(object value)
         {

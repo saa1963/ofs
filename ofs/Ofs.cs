@@ -172,5 +172,27 @@ namespace ofs
         /// 2400
         /// </summary>
         public int Chp { get; set; }
+
+        public decimal getRop()
+        {
+            int EconomyBranch;
+            var rating = new Rating();
+            using (var ctx = new OfsContext())
+            {
+                EconomyBranch = rating.getEconomyBranch(ctx.Clients.Find(Inn).Okved);
+            }
+            decimal[] koefs = {Kfn, Kosos, Ksova, Okl, Kp, Koa, Rp, Rsk.Value};
+            decimal sum1 = 0;
+            decimal sum2 = 0;
+            for (int i = 1; i <= 8; i++)
+            {
+                sum1 += rating.getRate(i, EconomyBranch, koefs[i - 1]) * rating.getWeight(i);
+                sum2 += rating.getWeight(i);
+            }
+            if (!koefs.Contains(0m))
+                return Decimal.Round(sum1 / sum2, 2, MidpointRounding.AwayFromZero);
+            else
+                return 0;
+        }
     }
 }

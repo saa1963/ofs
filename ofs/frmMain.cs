@@ -91,21 +91,17 @@ namespace ofs
             var f = new frmOfsParameters();
             if (f.ShowDialog() == DialogResult.OK)
             {
+                if (String.IsNullOrWhiteSpace(f.Client.Okved))
+                {
+                    MessageBox.Show("Не введен ОКВЭД, расчет невозможен.");
+                    return;
+                }
                 var q = ctx.Balances.Where(s => s.Inn == f.Inn).GroupBy(s => new QYear() { Year = s.Year, Quater = s.Quater })
                     .OrderBy(s => s.Key.Year).ThenBy(s => s.Key.Quater).ToArray();
                 if (q.Length == 0)
                 {
                     MessageBox.Show("Не введены данные.");
                     return;
-                }
-                for (int i = 0; i < q.Length; i++)
-                {
-                    if (i == 0) continue;
-                    //if (Subtraction(q[i].Key.Year, q[i].Key.Quater, q[i - 1].Key.Year, q[i - 1].Key.Quater) != 1)
-                    //{
-                    //    q = q.Take(i).ToArray();
-                    //    break;
-                    //}
                 }
                 var ofs = new Utils().DoOfs(f.Inn, f.Quater, q);
                 new Utils().OfsToExcel(ofs);

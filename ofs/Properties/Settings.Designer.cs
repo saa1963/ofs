@@ -82,5 +82,17 @@ namespace ofs.Properties {
                 this["ExcelPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int frmClients_Col2 {
+            get {
+                return ((int)(this["frmClients_Col2"]));
+            }
+            set {
+                this["frmClients_Col2"] = value;
+            }
+        }
     }
 }

@@ -34,5 +34,11 @@ namespace ofs
             get { return tbName.Text; }
             set { tbName.Text = value; }
         }
+
+        public string Okved
+        {
+            get { return tbOkved.Text; }
+            set { tbOkved.Text = value; }
+        }
     }
 }

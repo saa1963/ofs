@@ -33,12 +33,13 @@
             this.btnAdd = new System.Windows.Forms.ToolStripButton();
             this.btnChange = new System.Windows.Forms.ToolStripButton();
             this.btnDel = new System.Windows.Forms.ToolStripButton();
-            this.g = new System.Windows.Forms.DataGridView();
             this.tbFind = new System.Windows.Forms.ToolStripTextBox();
             this.btnFind = new System.Windows.Forms.ToolStripButton();
+            this.btnSelect = new System.Windows.Forms.ToolStripButton();
+            this.g = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnSelect = new System.Windows.Forms.ToolStripButton();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.g)).BeginInit();
             this.SuspendLayout();
@@ -54,7 +55,7 @@
             this.btnSelect});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(542, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(575, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -88,22 +89,6 @@
             this.btnDel.Text = "Удалить";
             this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
             // 
-            // g
-            // 
-            this.g.AllowUserToAddRows = false;
-            this.g.AllowUserToDeleteRows = false;
-            this.g.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.g.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1,
-            this.Column2});
-            this.g.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.g.Location = new System.Drawing.Point(0, 25);
-            this.g.Name = "g";
-            this.g.ReadOnly = true;
-            this.g.Size = new System.Drawing.Size(542, 476);
-            this.g.TabIndex = 1;
-            this.g.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.g_CellDoubleClick);
-            // 
             // tbFind
             // 
             this.tbFind.Name = "tbFind";
@@ -119,6 +104,32 @@
             this.btnFind.Text = "Поиск";
             this.btnFind.Click += new System.EventHandler(this.btnFind_Click);
             // 
+            // btnSelect
+            // 
+            this.btnSelect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnSelect.Image = ((System.Drawing.Image)(resources.GetObject("btnSelect.Image")));
+            this.btnSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSelect.Name = "btnSelect";
+            this.btnSelect.Size = new System.Drawing.Size(48, 22);
+            this.btnSelect.Text = "Выбор";
+            // 
+            // g
+            // 
+            this.g.AllowUserToAddRows = false;
+            this.g.AllowUserToDeleteRows = false;
+            this.g.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.g.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
+            this.Column2,
+            this.Column3});
+            this.g.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.g.Location = new System.Drawing.Point(0, 25);
+            this.g.Name = "g";
+            this.g.ReadOnly = true;
+            this.g.Size = new System.Drawing.Size(575, 476);
+            this.g.TabIndex = 1;
+            this.g.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.g_CellDoubleClick);
+            // 
             // Column1
             // 
             this.Column1.DataPropertyName = "Inn";
@@ -133,22 +144,20 @@
             this.Column2.HeaderText = "Наименование";
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
-            this.Column2.Width = 377;
+            this.Column2.Width = 320;
             // 
-            // btnSelect
+            // Column3
             // 
-            this.btnSelect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnSelect.Image = ((System.Drawing.Image)(resources.GetObject("btnSelect.Image")));
-            this.btnSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSelect.Name = "btnSelect";
-            this.btnSelect.Size = new System.Drawing.Size(48, 22);
-            this.btnSelect.Text = "Выбор";
+            this.Column3.DataPropertyName = "okved";
+            this.Column3.HeaderText = "ОКВЭД";
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
             // 
             // frmClients
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(542, 501);
+            this.ClientSize = new System.Drawing.Size(575, 501);
             this.Controls.Add(this.g);
             this.Controls.Add(this.toolStrip1);
             this.MaximizeBox = false;
@@ -174,8 +183,9 @@
         private System.Windows.Forms.DataGridView g;
         private System.Windows.Forms.ToolStripTextBox tbFind;
         private System.Windows.Forms.ToolStripButton btnFind;
+        private System.Windows.Forms.ToolStripButton btnSelect;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.ToolStripButton btnSelect;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
     }
 }
