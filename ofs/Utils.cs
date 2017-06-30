@@ -439,7 +439,7 @@ namespace ofs
                         if (j == 4)
                             wsh.Cells[7, j].Value = $"Изменения (гр.{j-1} - гр.{j-2})";
                         else
-                            wsh.Cells[7, j].Value = $"Изменения (гр.{j - 1} - гр.{j - 3})";
+                            wsh.Cells[7, j].Value = $"Изменения (гр.{j - 1} - гр.{j - 4})";
                         wsh.Cells[8, j].Value = j.ToString();
                         wsh.Cells[9, j].Value = ofs[i].Kfn - ofs[i - 1].Kfn;
                         wsh.Cells[10, j].Value = ofs[i].Kosos - ofs[i - 1].Kosos;
@@ -464,6 +464,78 @@ namespace ofs
                         wsh.Cells[31, j].Value = ofs[i].Sp - ofs[i - 1].Sp;
                         wsh.Cells[32, j].Value = ofs[i].Pop - ofs[i - 1].Pop;
                         wsh.Cells[33, j].Value = ofs[i].Chp - ofs[i - 1].Chp;
+                        j++;
+                        if (j == 5)
+                            wsh.Cells[7, j].Value = $"Изменения (гр.{j - 2} - гр.{j - 3}) %";
+                        else
+                            wsh.Cells[7, j].Value = $"Изменения (гр.{j - 2} - гр.{j - 5}) %";
+                        wsh.Cells[8, j].Value = j.ToString();
+                        try {
+                            wsh.Cells[9, j].Value = Decimal.Round(ofs[i].Kfn * 100 / ofs[i - 1].Kfn, 2, MidpointRounding.AwayFromZero);
+                        } catch (DivideByZeroException) { }
+                        try {
+                        wsh.Cells[10, j].Value = Decimal.Round(ofs[i].Kosos * 100 / ofs[i - 1].Kosos, 2, MidpointRounding.AwayFromZero);
+                        } catch (DivideByZeroException) { }
+                        try {
+                        wsh.Cells[11, j].Value = Decimal.Round(ofs[i].Ksova * 100 / ofs[i - 1].Ksova, 2, MidpointRounding.AwayFromZero);
+                        } catch (DivideByZeroException) { }
+                        try {
+                        wsh.Cells[12, j].Value = Decimal.Round(ofs[i].Okl * 100 / ofs[i - 1].Okl, 2, MidpointRounding.AwayFromZero);
+                        } catch (DivideByZeroException) { }
+                        try {
+                        wsh.Cells[13, j].Value = Decimal.Round(ofs[i].Kp * 100 / ofs[i - 1].Kp, 2, MidpointRounding.AwayFromZero);
+                        } catch (DivideByZeroException) { }
+                        try {
+                        wsh.Cells[14, j].Value = Decimal.Round(ofs[i].Koa * 100 / ofs[i - 1].Koa, 2, MidpointRounding.AwayFromZero);
+                        } catch (DivideByZeroException) { }
+                        try {
+                        wsh.Cells[15, j].Value = Decimal.Round(ofs[i].Rp * 100 / ofs[i - 1].Rp, 2, MidpointRounding.AwayFromZero);
+                        } catch (DivideByZeroException) { }
+                        try {
+                        wsh.Cells[16, j].Value = Decimal.Round(ofs[i].Rsk.Value * 100 / ofs[i - 1].Rsk.Value, 2, MidpointRounding.AwayFromZero);
+                        } catch (DivideByZeroException) { }
+                        try {
+                        wsh.Cells[20, j].Value = Decimal.Round(ofs[i].Vb * 100 / ofs[i - 1].Vb, 2, MidpointRounding.AwayFromZero);
+                        } catch (DivideByZeroException) { }
+                        try {
+                        wsh.Cells[21, j].Value = Decimal.Round(ofs[i].Va * 100 / ofs[i - 1].Va, 2, MidpointRounding.AwayFromZero);
+                        } catch (DivideByZeroException) { }
+                        try {
+                        wsh.Cells[22, j].Value = Decimal.Round(ofs[i].Os * 100 / ofs[i - 1].Os, 2, MidpointRounding.AwayFromZero);
+                        } catch (DivideByZeroException) { }
+                        try {
+                        wsh.Cells[23, j].Value = Decimal.Round(ofs[i].Oa * 100 / ofs[i - 1].Oa, 2, MidpointRounding.AwayFromZero);
+                        } catch (DivideByZeroException) { }
+                        try {
+                        wsh.Cells[24, j].Value = Decimal.Round(ofs[i].Zap * 100 / ofs[i - 1].Zap, 2, MidpointRounding.AwayFromZero);
+                        } catch (DivideByZeroException) { }
+                        try {
+                        wsh.Cells[25, j].Value = Decimal.Round(ofs[i].Dz * 100 / ofs[i - 1].Dz, 2, MidpointRounding.AwayFromZero);
+                        } catch (DivideByZeroException) { }
+                        try {
+                        wsh.Cells[26, j].Value = Decimal.Round(ofs[i].Fv * 100 / ofs[i - 1].Fv, 2, MidpointRounding.AwayFromZero);
+                        } catch (DivideByZeroException) { }
+                        try {
+                        wsh.Cells[27, j].Value = Decimal.Round(ofs[i].Kir * 100 / ofs[i - 1].Kir, 2, MidpointRounding.AwayFromZero);
+                        } catch (DivideByZeroException) { }
+                        try {
+                        wsh.Cells[28, j].Value = Decimal.Round(ofs[i].Np * 100 / ofs[i - 1].Np, 2, MidpointRounding.AwayFromZero);
+                        } catch (DivideByZeroException) { }
+                        try {
+                        wsh.Cells[29, j].Value = Decimal.Round(ofs[i].Cha * 100 / ofs[i - 1].Cha, 2, MidpointRounding.AwayFromZero);
+                        } catch (DivideByZeroException) { }
+                        try {
+                        wsh.Cells[30, j].Value = Decimal.Round(ofs[i].Vir * 100 / ofs[i - 1].Vir, 2, MidpointRounding.AwayFromZero);
+                        } catch (DivideByZeroException) { }
+                        try {
+                        wsh.Cells[31, j].Value = Decimal.Round(ofs[i].Sp * 100 / ofs[i - 1].Sp, 2, MidpointRounding.AwayFromZero);
+                        } catch (DivideByZeroException) { }
+                        try {
+                        wsh.Cells[32, j].Value = Decimal.Round(ofs[i].Pop * 100 / ofs[i - 1].Pop, 2, MidpointRounding.AwayFromZero);
+                        } catch (DivideByZeroException) { }
+                        try {
+                        wsh.Cells[33, j].Value = Decimal.Round(ofs[i].Chp * 100 / ofs[i - 1].Chp, 2, MidpointRounding.AwayFromZero);
+                        } catch (DivideByZeroException) { }
                         j++;
                     }
                     wsh.Cells[9, 2, wsh.Dimension.End.Row, wsh.Dimension.End.Column].Style.Font.Bold = true;
