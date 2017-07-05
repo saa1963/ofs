@@ -161,5 +161,31 @@ namespace ofs
                 new Utils().DoF2(f.SelectedClient);
             }
         }
+
+        private void mnuEdit2910_Click(object sender, EventArgs e)
+        {
+            int i = 0;
+            var clients = ctx.Clients.ToList();
+            foreach (var client in clients)
+            {
+                var bl = ctx.Balances.Where(s => s.Inn == client.Inn && s.Code == "2110").ToList();
+                foreach (var b in bl)
+                {
+                    if (ctx.Balances.Where(s => s.Inn == client.Inn && s.Year == b.Year && s.Quater == b.Quater && s.Code == "2910").Count() == 0)
+                    {
+                        var balance = new Balance();
+                        balance.Code = "2910";
+                        balance.Inn = client.Inn;
+                        balance.Quater = b.Quater;
+                        balance.Sm = 0;
+                        balance.Year = b.Year;
+                        ctx.Balances.Add(balance);
+                        i++;
+                    }
+                }
+            }
+            ctx.SaveChanges();
+            MessageBox.Show($"Добавлено {i} записей.");
+        }
     }
 }

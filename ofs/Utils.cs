@@ -202,20 +202,7 @@ namespace ofs
                         col++;
                     }
 
-                    //var bal = ctx.Balances.Include("Bline").Where(s => s.Inn == selectedClient.Inn && s.Bline.Code.Substring(0, 1) == "1").
                     var bl = ctx.Blines.Where(s => s.Code.Substring(0, 1) == "2").OrderBy(s => s.CodeSort).ToList();
-                    //var ins = bl.IndexOf(bl.Single(s => s.Code == "1110"));
-                    //bl.Insert(ins, new Bline() { Name = "АКТИВ", Code = "" });
-                    //bl.Insert(ins + 1, new Bline() { Name = "I. Внеоборотные активы", Code = "" });
-                    //ins = bl.IndexOf(bl.Single(s => s.Code == "1210"));
-                    //bl.Insert(ins, new Bline() { Name = "II. Оборотные активы", Code = "" });
-                    //ins = bl.IndexOf(bl.Single(s => s.Code == "1310"));
-                    //bl.Insert(ins, new Bline() { Name = "ПАССИВ", Code = "" });
-                    //bl.Insert(ins + 1, new Bline() { Name = "III. Капитал и резервы", Code = "" });
-                    //ins = bl.IndexOf(bl.Single(s => s.Code == "1410"));
-                    //bl.Insert(ins, new Bline() { Name = "IV. Долгосрочные обязательства", Code = "" });
-                    //ins = bl.IndexOf(bl.Single(s => s.Code == "1510"));
-                    //bl.Insert(ins, new Bline() { Name = "IV. Краткосрочные обязательства", Code = "" });
 
                     var row = 11;
                     foreach (var bline in bl)
@@ -383,25 +370,19 @@ namespace ofs
                     wsh.Cells[14, 1].Value = "Коэффициент оборачиваемости активов";
                     wsh.Cells[15, 1].Value = "Рентабельность продаж";
                     wsh.Cells[16, 1].Value = "Рентабельность собственного капитала (чистых активов)";
+                    wsh.Cells[17, 1].Value = "Обобщающий результат";
 
-                    wsh.Cells[18, 1].Value = "Динамика отдельных показателей";
-                    wsh.Cells[18, 1].Style.Font.Bold = true;
+                    wsh.Cells[19, 1].Value = "Динамика отдельных показателей";
+                    wsh.Cells[19, 1].Style.Font.Bold = true;
 
-                    wsh.Cells[20, 1].Value = "Валюта баланса";
-                    wsh.Cells[21, 1].Value = "Внеоборотные активы в т.ч.";
-                    wsh.Cells[22, 1].Value = "основные средства";
-                    wsh.Cells[23, 1].Value = "Оборотные активы в т.ч.";
-                    wsh.Cells[24, 1].Value = "запасы";
-                    wsh.Cells[25, 1].Value = "дебиторская задолженность";
-                    wsh.Cells[26, 1].Value = "финансовые вложения";
-                    wsh.Cells[27, 1].Value = "Капитал и резервы в т.ч.";
-                    wsh.Cells[28, 1].Value = "нераспределенная прибыль";
-                    wsh.Cells[29, 1].Value = "Чистые активы";
-                    wsh.Cells[30, 1].Value = "Выручка";
-                    wsh.Cells[31, 1].Value = "Себестоимость продаж";
-                    wsh.Cells[32, 1].Value = "Прибыль от продаж";
-                    wsh.Cells[33, 1].Value = "Чистая прибыль";
-                    wsh.Cells[35, 1].Value = "Обобщающий результат";
+                    var blines = ctx.Blines.OrderBy(s => s.CodeSort).ToList();
+
+                    int row = 20;
+                    foreach (var bline in blines)
+                    {
+                        wsh.Cells[row, 1].Value = $"{bline.Name} ({bline.Code})";
+                        row++;
+                    }
 
                     int j = 2;
                     for (int i = 0; i < ofs.Length; i++)
@@ -418,22 +399,14 @@ namespace ofs
                         wsh.Cells[14, j].Value = ofs[i].Koa;
                         wsh.Cells[15, j].Value = ofs[i].Rp;
                         wsh.Cells[16, j].Value = ofs[i].Rsk;
+                        wsh.Cells[17, j].Value = ofs[i].getRop();
 
-                        wsh.Cells[20, j].Value = ofs[i].Vb;
-                        wsh.Cells[21, j].Value = ofs[i].Va;
-                        wsh.Cells[22, j].Value = ofs[i].Os;
-                        wsh.Cells[23, j].Value = ofs[i].Oa;
-                        wsh.Cells[24, j].Value = ofs[i].Zap;
-                        wsh.Cells[25, j].Value = ofs[i].Dz;
-                        wsh.Cells[26, j].Value = ofs[i].Fv;
-                        wsh.Cells[27, j].Value = ofs[i].Kir;
-                        wsh.Cells[28, j].Value = ofs[i].Np;
-                        wsh.Cells[29, j].Value = ofs[i].Cha;
-                        wsh.Cells[30, j].Value = ofs[i].Vir;
-                        wsh.Cells[31, j].Value = ofs[i].Sp;
-                        wsh.Cells[32, j].Value = ofs[i].Pop;
-                        wsh.Cells[33, j].Value = ofs[i].Chp;
-                        wsh.Cells[35, j].Value = ofs[i].getRop();
+                        row = 20;
+                        foreach (var bline in blines)
+                        {
+                            wsh.Cells[row, j].Value = ofs[i].Balance.FirstOrDefault(s => s.Code == bline.Code).Sm;
+                            row++;
+                        }
                         j++;
                         if (j == 3) continue;
                         if (j == 4)
@@ -449,21 +422,15 @@ namespace ofs
                         wsh.Cells[14, j].Value = ofs[i].Koa - ofs[i - 1].Koa;
                         wsh.Cells[15, j].Value = ofs[i].Rp - ofs[i - 1].Rp;
                         wsh.Cells[16, j].Value = ofs[i].Rsk - ofs[i - 1].Rsk;
+                        wsh.Cells[17, j].Value = ofs[i].getRop() - ofs[i - 1].getRop();
 
-                        wsh.Cells[20, j].Value = ofs[i].Vb - ofs[i - 1].Vb;
-                        wsh.Cells[21, j].Value = ofs[i].Va - ofs[i - 1].Va;
-                        wsh.Cells[22, j].Value = ofs[i].Os - ofs[i - 1].Os;
-                        wsh.Cells[23, j].Value = ofs[i].Oa - ofs[i - 1].Oa;
-                        wsh.Cells[24, j].Value = ofs[i].Zap - ofs[i - 1].Zap;
-                        wsh.Cells[25, j].Value = ofs[i].Dz - ofs[i - 1].Dz;
-                        wsh.Cells[26, j].Value = ofs[i].Fv - ofs[i - 1].Fv;
-                        wsh.Cells[27, j].Value = ofs[i].Kir - ofs[i - 1].Kir;
-                        wsh.Cells[28, j].Value = ofs[i].Np - ofs[i - 1].Np;
-                        wsh.Cells[29, j].Value = ofs[i].Cha - ofs[i - 1].Cha;
-                        wsh.Cells[30, j].Value = ofs[i].Vir - ofs[i - 1].Vir;
-                        wsh.Cells[31, j].Value = ofs[i].Sp - ofs[i - 1].Sp;
-                        wsh.Cells[32, j].Value = ofs[i].Pop - ofs[i - 1].Pop;
-                        wsh.Cells[33, j].Value = ofs[i].Chp - ofs[i - 1].Chp;
+                        row = 20;
+                        foreach (var bline in blines)
+                        {
+                            wsh.Cells[row, j].Value = ofs[i].Balance.FirstOrDefault(s => s.Code == bline.Code).Sm -
+                                                        ofs[i - 1].Balance.FirstOrDefault(s => s.Code == bline.Code).Sm;
+                            row++;
+                        }
                         j++;
                         if (j == 5)
                             wsh.Cells[7, j].Value = $"Изменения (гр.{j - 2} - гр.{j - 3}) %";
@@ -494,59 +461,34 @@ namespace ofs
                         try {
                         wsh.Cells[16, j].Value = Decimal.Round(ofs[i].Rsk.Value * 100 / ofs[i - 1].Rsk.Value, 2, MidpointRounding.AwayFromZero);
                         } catch (DivideByZeroException) { }
-                        try {
-                        wsh.Cells[20, j].Value = Decimal.Round(ofs[i].Vb * 100 / ofs[i - 1].Vb, 2, MidpointRounding.AwayFromZero);
-                        } catch (DivideByZeroException) { }
-                        try {
-                        wsh.Cells[21, j].Value = Decimal.Round(ofs[i].Va * 100 / ofs[i - 1].Va, 2, MidpointRounding.AwayFromZero);
-                        } catch (DivideByZeroException) { }
-                        try {
-                        wsh.Cells[22, j].Value = Decimal.Round(ofs[i].Os * 100 / ofs[i - 1].Os, 2, MidpointRounding.AwayFromZero);
-                        } catch (DivideByZeroException) { }
-                        try {
-                        wsh.Cells[23, j].Value = Decimal.Round(ofs[i].Oa * 100 / ofs[i - 1].Oa, 2, MidpointRounding.AwayFromZero);
-                        } catch (DivideByZeroException) { }
-                        try {
-                        wsh.Cells[24, j].Value = Decimal.Round(ofs[i].Zap * 100 / ofs[i - 1].Zap, 2, MidpointRounding.AwayFromZero);
-                        } catch (DivideByZeroException) { }
-                        try {
-                        wsh.Cells[25, j].Value = Decimal.Round(ofs[i].Dz * 100 / ofs[i - 1].Dz, 2, MidpointRounding.AwayFromZero);
-                        } catch (DivideByZeroException) { }
-                        try {
-                        wsh.Cells[26, j].Value = Decimal.Round(ofs[i].Fv * 100 / ofs[i - 1].Fv, 2, MidpointRounding.AwayFromZero);
-                        } catch (DivideByZeroException) { }
-                        try {
-                        wsh.Cells[27, j].Value = Decimal.Round(ofs[i].Kir * 100 / ofs[i - 1].Kir, 2, MidpointRounding.AwayFromZero);
-                        } catch (DivideByZeroException) { }
-                        try {
-                        wsh.Cells[28, j].Value = Decimal.Round(ofs[i].Np * 100 / ofs[i - 1].Np, 2, MidpointRounding.AwayFromZero);
-                        } catch (DivideByZeroException) { }
-                        try {
-                        wsh.Cells[29, j].Value = Decimal.Round(ofs[i].Cha * 100 / ofs[i - 1].Cha, 2, MidpointRounding.AwayFromZero);
-                        } catch (DivideByZeroException) { }
-                        try {
-                        wsh.Cells[30, j].Value = Decimal.Round(ofs[i].Vir * 100 / ofs[i - 1].Vir, 2, MidpointRounding.AwayFromZero);
-                        } catch (DivideByZeroException) { }
-                        try {
-                        wsh.Cells[31, j].Value = Decimal.Round(ofs[i].Sp * 100 / ofs[i - 1].Sp, 2, MidpointRounding.AwayFromZero);
-                        } catch (DivideByZeroException) { }
-                        try {
-                        wsh.Cells[32, j].Value = Decimal.Round(ofs[i].Pop * 100 / ofs[i - 1].Pop, 2, MidpointRounding.AwayFromZero);
-                        } catch (DivideByZeroException) { }
-                        try {
-                        wsh.Cells[33, j].Value = Decimal.Round(ofs[i].Chp * 100 / ofs[i - 1].Chp, 2, MidpointRounding.AwayFromZero);
-                        } catch (DivideByZeroException) { }
+                        try
+                        {
+                            wsh.Cells[17, j].Value = Decimal.Round(ofs[i].getRop() * 100 / ofs[i - 1].getRop(), 2, MidpointRounding.AwayFromZero);
+                        }
+                        catch (DivideByZeroException) { }
+
+                        row = 20;
+                        foreach (var bline in blines)
+                        {
+                            try
+                            {
+                                wsh.Cells[row, j].Value = Decimal.Round(ofs[i].Balance.FirstOrDefault(s => s.Code == bline.Code).Sm * 100 /
+                                    ofs[i - 1].Balance.FirstOrDefault(s => s.Code == bline.Code).Sm, 2, MidpointRounding.AwayFromZero);
+                            }
+                            catch (DivideByZeroException) { }
+                            row++;
+                        }
                         j++;
                     }
                     wsh.Cells[9, 2, wsh.Dimension.End.Row, wsh.Dimension.End.Column].Style.Font.Bold = true;
-                    wsh.Cells[7, 1, 16, wsh.Dimension.End.Column].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
-                    wsh.Cells[7, 1, 16, wsh.Dimension.End.Column].Style.Border.Top.Style = ExcelBorderStyle.Thin;
-                    wsh.Cells[7, 1, 16, wsh.Dimension.End.Column].Style.Border.Left.Style = ExcelBorderStyle.Thin;
-                    wsh.Cells[7, 1, 16, wsh.Dimension.End.Column].Style.Border.Right.Style = ExcelBorderStyle.Thin;
-                    wsh.Cells[20, 1, 33, wsh.Dimension.End.Column].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
-                    wsh.Cells[20, 1, 33, wsh.Dimension.End.Column].Style.Border.Top.Style = ExcelBorderStyle.Thin;
-                    wsh.Cells[20, 1, 33, wsh.Dimension.End.Column].Style.Border.Left.Style = ExcelBorderStyle.Thin;
-                    wsh.Cells[20, 1, 33, wsh.Dimension.End.Column].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                    wsh.Cells[7, 1, 17, wsh.Dimension.End.Column].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                    wsh.Cells[7, 1, 17, wsh.Dimension.End.Column].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                    wsh.Cells[7, 1, 17, wsh.Dimension.End.Column].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                    wsh.Cells[7, 1, 17, wsh.Dimension.End.Column].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                    wsh.Cells[20, 1, row - 1, wsh.Dimension.End.Column].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                    wsh.Cells[20, 1, row - 1, wsh.Dimension.End.Column].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                    wsh.Cells[20, 1, row - 1, wsh.Dimension.End.Column].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                    wsh.Cells[20, 1, row - 1, wsh.Dimension.End.Column].Style.Border.Right.Style = ExcelBorderStyle.Thin;
 
                     package.File = new FileInfo(Path.Combine(Path.GetTempPath(), "__ofs__" + Guid.NewGuid().ToString() + ".xlsx"));
                     package.Save();
@@ -594,6 +536,7 @@ namespace ofs
                 if (o.Key.Quater != quater) continue;
                 var o1 = q.FirstOrDefault(s => s.Key.MyEquals(o.Key.БлижайшийМинимальный4Квартал()));
                 var ofs = new Ofs();
+                ofs.Balance = o;
                 ofs.Cha = o.Single(s => s.Code == "1300").Sm + o.Single(s => s.Code == "1530").Sm;
                 ofs.Chp = o.Single(s => s.Code == "2400").Sm;
                 ofs.Dz = o.Single(s => s.Code == "1230").Sm;

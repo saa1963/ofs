@@ -74,6 +74,8 @@ namespace ofs
         /// 2300/((1300пр+1530пр+1300+1530)*0,5)*365/90
         /// </summary>
         public decimal? Rsk { get; set; }
+
+
         /// <summary>
         /// строка 24
         /// Валюта баланса
@@ -172,6 +174,9 @@ namespace ofs
         /// 2400
         /// </summary>
         public int Chp { get; set; }
+        public IGrouping<QYear, Balance> Balance { get => balance; set => balance = value; }
+
+        private IGrouping<QYear, Balance> balance;
 
         public decimal getRop()
         {

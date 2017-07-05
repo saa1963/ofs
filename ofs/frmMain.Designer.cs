@@ -35,11 +35,12 @@
             this.отчетыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuOfs = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuBalances = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuF2 = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuSprav = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuClients = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuBlines = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuF2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuEdit2910 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,7 +61,8 @@
             // 
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuBalanceEditor,
-            this.mnuLoadFromExcel});
+            this.mnuLoadFromExcel,
+            this.mnuEdit2910});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(67, 20);
             this.toolStripMenuItem1.Text = "Балансы";
@@ -103,6 +105,13 @@
             this.mnuBalances.Text = "Баланс";
             this.mnuBalances.Click += new System.EventHandler(this.mnuBalances_Click);
             // 
+            // mnuF2
+            // 
+            this.mnuF2.Name = "mnuF2";
+            this.mnuF2.Size = new System.Drawing.Size(252, 22);
+            this.mnuF2.Text = "Форма-2";
+            this.mnuF2.Click += new System.EventHandler(this.mnuF2_Click);
+            // 
             // mnuSprav
             // 
             this.mnuSprav.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -133,12 +142,13 @@
             this.mnuAbout.Text = "О программе";
             this.mnuAbout.Click += new System.EventHandler(this.mnuAbout_Click);
             // 
-            // mnuF2
+            // mnuEdit2910
             // 
-            this.mnuF2.Name = "mnuF2";
-            this.mnuF2.Size = new System.Drawing.Size(252, 22);
-            this.mnuF2.Text = "Форма-2";
-            this.mnuF2.Click += new System.EventHandler(this.mnuF2_Click);
+            this.mnuEdit2910.Name = "mnuEdit2910";
+            this.mnuEdit2910.Size = new System.Drawing.Size(172, 22);
+            this.mnuEdit2910.Text = "Правка 2910";
+            this.mnuEdit2910.Visible = false;
+            this.mnuEdit2910.Click += new System.EventHandler(this.mnuEdit2910_Click);
             // 
             // frmMain
             // 
@@ -172,6 +182,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuOfs;
         private System.Windows.Forms.ToolStripMenuItem mnuBalances;
         private System.Windows.Forms.ToolStripMenuItem mnuF2;
+        private System.Windows.Forms.ToolStripMenuItem mnuEdit2910;
     }
 }
 
