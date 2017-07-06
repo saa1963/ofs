@@ -438,32 +438,32 @@ namespace ofs
                             wsh.Cells[7, j].Value = $"Изменения (гр.{j - 2} - гр.{j - 5}) %";
                         wsh.Cells[8, j].Value = j.ToString();
                         try {
-                            wsh.Cells[9, j].Value = Decimal.Round(ofs[i].Kfn * 100 / ofs[i - 1].Kfn, 2, MidpointRounding.AwayFromZero);
+                            wsh.Cells[9, j].Value = getPercent(ofs[i].Kfn, ofs[i - 1].Kfn);
                         } catch (DivideByZeroException) { }
                         try {
-                        wsh.Cells[10, j].Value = Decimal.Round(ofs[i].Kosos * 100 / ofs[i - 1].Kosos, 2, MidpointRounding.AwayFromZero);
+                        wsh.Cells[10, j].Value = getPercent(ofs[i].Kosos, ofs[i - 1].Kosos);
                         } catch (DivideByZeroException) { }
                         try {
-                        wsh.Cells[11, j].Value = Decimal.Round(ofs[i].Ksova * 100 / ofs[i - 1].Ksova, 2, MidpointRounding.AwayFromZero);
+                        wsh.Cells[11, j].Value = getPercent(ofs[i].Ksova, ofs[i - 1].Ksova);
                         } catch (DivideByZeroException) { }
                         try {
-                        wsh.Cells[12, j].Value = Decimal.Round(ofs[i].Okl * 100 / ofs[i - 1].Okl, 2, MidpointRounding.AwayFromZero);
+                        wsh.Cells[12, j].Value = getPercent(ofs[i].Okl, ofs[i - 1].Okl);
                         } catch (DivideByZeroException) { }
                         try {
-                        wsh.Cells[13, j].Value = Decimal.Round(ofs[i].Kp * 100 / ofs[i - 1].Kp, 2, MidpointRounding.AwayFromZero);
+                        wsh.Cells[13, j].Value = getPercent(ofs[i].Kp, ofs[i - 1].Kp);
                         } catch (DivideByZeroException) { }
                         try {
-                        wsh.Cells[14, j].Value = Decimal.Round(ofs[i].Koa * 100 / ofs[i - 1].Koa, 2, MidpointRounding.AwayFromZero);
+                        wsh.Cells[14, j].Value = getPercent(ofs[i].Koa, ofs[i - 1].Koa);
                         } catch (DivideByZeroException) { }
                         try {
-                        wsh.Cells[15, j].Value = Decimal.Round(ofs[i].Rp * 100 / ofs[i - 1].Rp, 2, MidpointRounding.AwayFromZero);
+                        wsh.Cells[15, j].Value = getPercent(ofs[i].Rp, ofs[i - 1].Rp);
                         } catch (DivideByZeroException) { }
                         try {
-                        wsh.Cells[16, j].Value = Decimal.Round(ofs[i].Rsk.Value * 100 / ofs[i - 1].Rsk.Value, 2, MidpointRounding.AwayFromZero);
+                        wsh.Cells[16, j].Value = getPercent(ofs[i].Rsk.Value, ofs[i - 1].Rsk.Value);
                         } catch (DivideByZeroException) { }
                         try
                         {
-                            wsh.Cells[17, j].Value = Decimal.Round(ofs[i].getRop() * 100 / ofs[i - 1].getRop(), 2, MidpointRounding.AwayFromZero);
+                            wsh.Cells[17, j].Value = getPercent(ofs[i].getRop(), ofs[i - 1].getRop());
                         }
                         catch (DivideByZeroException) { }
 
@@ -472,15 +472,35 @@ namespace ofs
                         {
                             try
                             {
-                                wsh.Cells[row, j].Value = Decimal.Round(ofs[i].Balance.FirstOrDefault(s => s.Code == bline.Code).Sm * 100 /
-                                    ofs[i - 1].Balance.FirstOrDefault(s => s.Code == bline.Code).Sm, 2, MidpointRounding.AwayFromZero);
+                                wsh.Cells[row, j].Value = getPercent(ofs[i].Balance.FirstOrDefault(s => s.Code == bline.Code).Sm,
+                                    ofs[i - 1].Balance.FirstOrDefault(s => s.Code == bline.Code).Sm);
                             }
                             catch (DivideByZeroException) { }
                             row++;
                         }
+
+                        for (var row1 = 9; row1 <= row; row1++)
+                        {
+                            for (var col1 = j - 1; col1 <= j; col1++)
+                            {
+                                try
+                                {
+                                    if (Convert.ToDecimal(wsh.Cells[row1, col1].Value) > 0)
+                                    {
+                                        wsh.Cells[row1, col1].Style.Font.Color.SetColor(System.Drawing.Color.Blue);
+                                    }
+                                    else if (Convert.ToDecimal(wsh.Cells[row1, col1].Value) < 0)
+                                    {
+                                        wsh.Cells[row1, col1].Style.Font.Color.SetColor(System.Drawing.Color.Red);
+                                    }
+                                }
+                                catch { }
+                            }
+                        }
+
                         j++;
                     }
-                    wsh.Cells[9, 2, wsh.Dimension.End.Row, wsh.Dimension.End.Column].Style.Font.Bold = true;
+                    //wsh.Cells[9, 2, wsh.Dimension.End.Row, wsh.Dimension.End.Column].Style.Font.Bold = true;
                     wsh.Cells[7, 1, 17, wsh.Dimension.End.Column].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
                     wsh.Cells[7, 1, 17, wsh.Dimension.End.Column].Style.Border.Top.Style = ExcelBorderStyle.Thin;
                     wsh.Cells[7, 1, 17, wsh.Dimension.End.Column].Style.Border.Left.Style = ExcelBorderStyle.Thin;
@@ -499,6 +519,11 @@ namespace ofs
                     prc.Start();
                 }
             }
+        }
+
+        private object getPercent(decimal val, decimal val_1)
+        {
+            return Decimal.Round((val - val_1) * 100 / val_1, 2, MidpointRounding.AwayFromZero);
         }
 
         private object DateFromQuater(int year, int quater)
