@@ -78,6 +78,7 @@ namespace ofs
             try
             {
                 new Utils().LoadBalance(ctx, ofd.FileName);
+                mnuEdit2910_Click(null, null);
             }
             catch (LoadExcelException e1)
             {
@@ -185,7 +186,7 @@ namespace ofs
                 }
             }
             ctx.SaveChanges();
-            MessageBox.Show($"Добавлено {i} записей.");
+//            MessageBox.Show($"Добавлено {i} записей.");
         }
     }
 }

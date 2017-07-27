@@ -32,6 +32,7 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuBalanceEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuLoadFromExcel = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuEdit2910 = new System.Windows.Forms.ToolStripMenuItem();
             this.отчетыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuOfs = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuBalances = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,7 +41,6 @@
             this.mnuClients = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuBlines = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuEdit2910 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -80,6 +80,14 @@
             this.mnuLoadFromExcel.Size = new System.Drawing.Size(172, 22);
             this.mnuLoadFromExcel.Text = "Загрузить из Excel";
             this.mnuLoadFromExcel.Click += new System.EventHandler(this.mnuLoadFromExcel_Click);
+            // 
+            // mnuEdit2910
+            // 
+            this.mnuEdit2910.Name = "mnuEdit2910";
+            this.mnuEdit2910.Size = new System.Drawing.Size(172, 22);
+            this.mnuEdit2910.Text = "Правка 2910";
+            this.mnuEdit2910.Visible = false;
+            this.mnuEdit2910.Click += new System.EventHandler(this.mnuEdit2910_Click);
             // 
             // отчетыToolStripMenuItem
             // 
@@ -141,14 +149,6 @@
             this.mnuAbout.Size = new System.Drawing.Size(94, 20);
             this.mnuAbout.Text = "О программе";
             this.mnuAbout.Click += new System.EventHandler(this.mnuAbout_Click);
-            // 
-            // mnuEdit2910
-            // 
-            this.mnuEdit2910.Name = "mnuEdit2910";
-            this.mnuEdit2910.Size = new System.Drawing.Size(172, 22);
-            this.mnuEdit2910.Text = "Правка 2910";
-            this.mnuEdit2910.Visible = false;
-            this.mnuEdit2910.Click += new System.EventHandler(this.mnuEdit2910_Click);
             // 
             // frmMain
             // 
