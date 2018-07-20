@@ -82,7 +82,7 @@ namespace ofs
                                 }
                                 if (ctx.Balances.Find(bal.Quater, bal.Year, bal.Inn, bal.Code) == null)
                                 {
-                                    if (bal.Year < 2019)
+                                    if (bal.Year < DateTime.Now.Year + 1)
                                     {
                                         ctx.Balances.Add(bal);
                                     }
@@ -145,7 +145,7 @@ namespace ofs
                                 }
                                 if (ctx.Balances.Find(bal.Quater, bal.Year, bal.Inn, bal.Code) == null)
                                 {
-                                    if (bal.Year < 2019)
+                                    if (bal.Year < DateTime.Now.Year + 1)
                                     {
                                         ctx.Balances.Add(bal);
                                     }
@@ -700,6 +700,14 @@ namespace ofs
                 else if (s.Contains("2018"))
                 {
                     year = 2018;
+                }
+                else if (s.Contains("2019"))
+                {
+                    year = 2019;
+                }
+                else if (s.Contains("2020"))
+                {
+                    year = 2020;
                 }
                 else
                     return null;
