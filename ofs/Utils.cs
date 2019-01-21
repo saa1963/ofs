@@ -578,16 +578,22 @@ namespace ofs
                 }
                 ofs.Kir = o.Single(s => s.Code == "1300").Sm;
 
-                if (o1 != null)
-                    if (o.Single(s => s.Code == "2110").Smd != 0)
+                if (o1 != null && o != null)
+                {
+                    var a1 = o1.Single(s => s.Code == "1600").Smd;
+                    var a2 = o.Single(s => s.Code == "1600").Smd;
+                    var a3 = o.Single(s => s.Code == "2110").Smd;
+                    if ((a1 + a2) != 0)
                     {
-                        ofs.Koa = Decimal.Round(((o1.Single(s => s.Code == "1600").Smd + o.Single(s => s.Code == "1600").Smd)
-                            * 0.5m / o.Single(s => s.Code == "2110").Smd) * days[quater], 0, MidpointRounding.AwayFromZero);
+                        ofs.Koa = Decimal.Round((a3 / ((a1 + a2) * 0.5m)) * days[quater], 0, MidpointRounding.AwayFromZero);
+                        //ofs.Koa = Decimal.Round(((o1.Single(s => s.Code == "1600").Smd + o.Single(s => s.Code == "1600").Smd)
+                        //    * 0.5m / o.Single(s => s.Code == "2110").Smd) * days[quater], 0, MidpointRounding.AwayFromZero);
                     }
                     else
                     {
                         ofs.Koa = 0;
                     }
+                }
                 else
                 {
                     ofs.Koa = 0;
