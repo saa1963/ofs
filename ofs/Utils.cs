@@ -552,8 +552,8 @@ namespace ofs
 
         internal Ofs[] DoOfs(string inn, int quater, IGrouping<QYear, Balance>[] q)
         {
-            var days = new Dictionary<int, decimal>()
-                { {1, 90m}, { 2, 181m}, {3, 273m}, {4, 365m} };
+            //var days = new Dictionary<int, decimal>()
+            //    { {1, 90m}, { 2, 181m}, {3, 273m}, {4, 365m} };
             Ofs[] rt = new Ofs[q.Length];
             for (int i = 0; i < q.Length; i++)
             {
@@ -585,7 +585,7 @@ namespace ofs
                     var a3 = o.Single(s => s.Code == "2110").Smd;
                     if ((a1 + a2) != 0)
                     {
-                        ofs.Koa = Decimal.Round((a3 / ((a1 + a2) * 0.5m)) * days[quater], 0, MidpointRounding.AwayFromZero);
+                        ofs.Koa = Decimal.Round((a3 / ((a1 + a2) * 0.5m)) * o.Key.DaysInPeriod, 0, MidpointRounding.AwayFromZero);
                         //ofs.Koa = Decimal.Round(((o1.Single(s => s.Code == "1600").Smd + o.Single(s => s.Code == "1600").Smd)
                         //    * 0.5m / o.Single(s => s.Code == "2110").Smd) * days[quater], 0, MidpointRounding.AwayFromZero);
                     }
@@ -653,7 +653,7 @@ namespace ofs
                     {
                         ofs.Rsk = Decimal.Round(o.Single(s => s.Code == "2300").Smd / ((o1.Single(s => s.Code == "1300").Smd +
                             o1.Single(s => s.Code == "1530").Smd + o.Single(s => s.Code == "1300").Smd + o.Single(s => s.Code == "1530").Smd)
-                            * 0.5m) * 365m / days[quater], 2, MidpointRounding.AwayFromZero);
+                            * 0.5m) * o.Key.DaysInYear / o.Key.DaysInPeriod, 2, MidpointRounding.AwayFromZero);
                     }
                     else
                     {
@@ -715,6 +715,47 @@ namespace ofs
                 {
                     year = 2020;
                 }
+                else if (s.Contains("2021"))
+                {
+                    year = 2021;
+                }
+                else if (s.Contains("2022"))
+                {
+                    year = 2022;
+                }
+                else if (s.Contains("2023"))
+                {
+                    year = 2023;
+                }
+                else if (s.Contains("2024"))
+                {
+                    year = 2024;
+                }
+                else if (s.Contains("2025"))
+                {
+                    year = 2025;
+                }
+                else if (s.Contains("2026"))
+                {
+                    year = 2026;
+                }
+                else if (s.Contains("2027"))
+                {
+                    year = 2027;
+                }
+                else if (s.Contains("2028"))
+                {
+                    year = 2028;
+                }
+                else if (s.Contains("2029"))
+                {
+                    year = 2029;
+                }
+                else if (s.Contains("2030"))
+                {
+                    year = 2030;
+                }
+
                 else
                     return null;
                 if (s.Contains("1 кв"))
@@ -778,7 +819,36 @@ namespace ofs
             }
             return o;
         }
-
+        public int DaysInYear
+        {
+            get
+            {
+                if (Year % 4 == 0) return 366;
+                else return 365;
+            }
+        }
+        public int DaysInPeriod
+        {
+            get
+            {
+                switch (Quater)
+                {
+                    case 1:
+                        if (Year % 4 == 0) return 91;
+                        else return 90;
+                    case 2:
+                        if (Year % 4 == 0) return 182;
+                        else return 181;
+                    case 3:
+                        if (Year % 4 == 0) return 274;
+                        else return 273;
+                    case 4:
+                        if (Year % 4 == 0) return 366;
+                        else return 365;
+                }
+                return 0;
+            }
+        }
         public static DateTime DateFromQuater(QYear q)
         {
             switch (q.Quater)

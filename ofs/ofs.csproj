@@ -53,10 +53,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>202603B578D6763274FA5D23BB8724EE8A53510E</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>B69A5E1A70552DADE493C1987E8E1EBD3C28801D</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>ofs_1_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>ofs_2_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -230,6 +230,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="ofs_1_TemporaryKey.pfx" />
+    <None Include="ofs_2_TemporaryKey.pfx" />
     <None Include="ofs_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
